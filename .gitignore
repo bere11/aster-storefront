@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+.env
+.env.local
+*.log
+*-desktop.png
+*-mobile.png
+.DS_Store
+.vite
+Qubica-interview.pdf
