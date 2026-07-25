@@ -6,6 +6,11 @@ A responsive e-commerce interview project built with React and TypeScript. It
 uses [Fake Store API](https://fakestoreapi.com/docs) for products, categories,
 authentication, and simulated cart submission.
 
+The PDF-derived acceptance matrix, project decisions, and live progress tracker
+are maintained in [PROJECT_SPEC.md](PROJECT_SPEC.md). Development workflow and
+pull request expectations are documented in
+[CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Features
 
 - Product grid with images, names, prices, ratings, search, and sorting
