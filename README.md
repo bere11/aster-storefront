@@ -1,5 +1,7 @@
 # Aster Storefront
 
+[![CI](https://github.com/bere11/aster-storefront/actions/workflows/ci.yml/badge.svg)](https://github.com/bere11/aster-storefront/actions/workflows/ci.yml)
+
 A responsive e-commerce interview project built with React and TypeScript. It
 uses [Fake Store API](https://fakestoreapi.com/docs) for products, categories,
 authentication, and simulated cart submission.
