@@ -29,7 +29,7 @@ import {
 
 const HeroBand = styled("section")(({ theme }) => ({
   overflow: "hidden",
-  backgroundColor: theme.palette.mode === "light" ? "#e8efea" : "#112720",
+  backgroundColor: theme.palette.mode === "light" ? "#dfe9e2" : "#102c24",
   borderBottom: `1px solid ${theme.palette.divider}`,
   boxShadow: `inset 0 4px 0 ${theme.palette.secondary.main}`,
 }));
@@ -43,15 +43,59 @@ const HeroLayout = styled(Container)(({ theme }) => ({
 }));
 
 const HeroCopy = styled(Box)(({ theme }) => ({
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+  isolation: "isolate",
+  overflow: "hidden",
   paddingBlock: theme.spacing(4),
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    zIndex: 0,
+    top: 24,
+    right: -64,
+    width: 190,
+    height: 190,
+    border: `28px solid ${alpha(theme.palette.secondary.main, 0.13)}`,
+    transform: "rotate(12deg)",
+    pointerEvents: "none",
+  },
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    zIndex: 0,
+    bottom: -72,
+    left: -38,
+    width: 72,
+    height: 190,
+    backgroundColor: alpha(theme.palette.info.main, 0.13),
+    transform: "rotate(-12deg)",
+    pointerEvents: "none",
+  },
+  "& > *": {
+    position: "relative",
+    zIndex: 1,
+  },
   [theme.breakpoints.up("sm")]: {
     paddingBlock: theme.spacing(8),
   },
   [theme.breakpoints.up("md")]: {
     paddingRight: theme.spacing(8),
+    "&::before": {
+      top: 52,
+      right: 24,
+      width: 270,
+      height: 270,
+      borderWidth: 38,
+    },
+    "&::after": {
+      bottom: -84,
+      left: -52,
+      width: 104,
+      height: 260,
+    },
   },
 }));
 
@@ -100,9 +144,39 @@ const HeroVisual = styled(Box)(({ theme }) => ({
   overflow: "hidden",
   backgroundColor:
     theme.palette.mode === "light"
-      ? alpha(theme.palette.info.main, 0.14)
-      : alpha(theme.palette.info.main, 0.1),
+      ? "#c8dde0"
+      : "#173c37",
   borderInline: `1px solid ${theme.palette.divider}`,
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    zIndex: 0,
+    insetBlock: 0,
+    right: 0,
+    width: "18%",
+    backgroundColor: alpha(theme.palette.secondary.main, 0.22),
+    pointerEvents: "none",
+  },
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    zIndex: 0,
+    top: "13%",
+    left: "16%",
+    width: "68%",
+    height: "60%",
+    border: `1px solid ${alpha(theme.palette.primary.main, 0.24)}`,
+    backgroundColor: alpha(theme.palette.background.paper, 0.28),
+    transform: "rotate(-3deg)",
+    pointerEvents: "none",
+  },
+  "& > *": {
+    position: "relative",
+    zIndex: 1,
+  },
+  "& > .hero-product-bar": {
+    zIndex: 2,
+  },
   "&:hover .hero-product-image, &:focus-within .hero-product-image": {
     transform: "translateY(-5px) scale(1.025)",
   },
@@ -130,6 +204,10 @@ const HeroImage = styled("img")(({ theme }) => ({
   maxHeight: 205,
   objectFit: "contain",
   mixBlendMode: theme.palette.mode === "light" ? "multiply" : "normal",
+  filter:
+    theme.palette.mode === "light"
+      ? "drop-shadow(0 18px 16px rgba(21, 63, 54, 0.14))"
+      : "drop-shadow(0 18px 18px rgba(0, 0, 0, 0.24))",
   transition: "transform var(--motion-medium) var(--ease-out)",
   [theme.breakpoints.up("sm")]: {
     width: "90%",

@@ -125,6 +125,8 @@ affected flow.
 | DESIGN-3 | Refine Aster away from an editorial/blog treatment | DONE | Restored sparkle identity, sans-serif hierarchy, direct shopping copy, simplified labels, favicon, and manifest |
 | DESIGN-4 | Add character to the hero without returning to an editorial layout | DONE | Branded sage-and-coral backdrop, stable featured-product bar, and shared product hover treatment |
 | QA-1 | Review and record user-reported application bugs | DONE | Fixed app bar and scroll-stable Sort menu; retained hero content through smooth category transitions; verified desktop, dark, and 390px states |
+| DESIGN-5 | Increase hero depth while preserving the storefront direction | DONE | Layered geometric color blocks, offset product plate, and stronger responsive hero palette |
+| QA-2 | Refine mobile header and drawer behavior | DONE | Wishlist/cart stay in the app bar; theme/session actions moved into the drawer; app-bar and in-drawer close controls verified at 390px |
 
 ## Progress Log
 
@@ -149,3 +151,7 @@ affected flow.
   transition, and featured-product hover interactions.
 - Verified stable header and menu geometry, retained category-loading content,
   dark mode, and a 390px viewport in Chrome.
+- Restored visual depth with non-editorial geometric hero layers and a stronger
+  featured-product backdrop.
+- Reworked mobile navigation around persistent shopping actions and verified
+  app-bar close, drawer close, theme switching, and logout behavior.

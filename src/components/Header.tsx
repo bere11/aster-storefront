@@ -165,6 +165,7 @@ export function Header() {
     location.pathname === "/" ? searchParams.get("category") : null;
 
   const closeMobileNav = () => setMobileOpen(false);
+  const toggleMobileNav = () => setMobileOpen((isOpen) => !isOpen);
   const handleLogout = () => {
     logout();
     closeMobileNav();
@@ -203,8 +204,10 @@ export function Header() {
         <Container>
           <MainToolbar disableGutters>
             <IconButton
-              aria-label="Open navigation"
-              onClick={() => setMobileOpen(true)}
+              aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+              aria-controls="mobile-navigation"
+              aria-expanded={mobileOpen}
+              onClick={toggleMobileNav}
               sx={{ display: { md: "none" }, mr: 1 }}
             >
               <MenuRounded />
@@ -251,23 +254,10 @@ export function Header() {
             </DesktopCategories>
 
             <HeaderActions direction="row" alignItems="center">
-              <Tooltip title={`Use ${mode === "light" ? "dark" : "light"} theme`}>
-                <HeaderAction
-                  onClick={toggleMode}
-                  aria-label={`Use ${mode === "light" ? "dark" : "light"} theme`}
-                >
-                  {mode === "light" ? (
-                    <DarkModeOutlined />
-                  ) : (
-                    <LightModeOutlined />
-                  )}
-                </HeaderAction>
-              </Tooltip>
               <Tooltip title="Wishlist">
                 <HeaderActionLink
                   to="/wishlist"
                   aria-label={`Wishlist, ${wishlist.length} items`}
-                  sx={{ display: { xs: "none", sm: "inline-flex" } }}
                 >
                   <Badge badgeContent={auth ? wishlist.length : 0} color="secondary">
                     <FavoriteBorderRounded />
@@ -278,19 +268,31 @@ export function Header() {
                 <HeaderActionLink
                   to="/cart"
                   aria-label={`Shopping bag, ${cartCount} items`}
-                  sx={{ display: { xs: "none", sm: "inline-flex" } }}
                 >
                   <Badge badgeContent={auth ? cartCount : 0} color="secondary">
                     <ShoppingBagOutlined />
                   </Badge>
                 </HeaderActionLink>
               </Tooltip>
+              <Tooltip title={`Use ${mode === "light" ? "dark" : "light"} theme`}>
+                <HeaderAction
+                  onClick={toggleMode}
+                  aria-label={`Use ${mode === "light" ? "dark" : "light"} theme`}
+                  sx={{ display: { xs: "none", md: "inline-flex" } }}
+                >
+                  {mode === "light" ? (
+                    <DarkModeOutlined />
+                  ) : (
+                    <LightModeOutlined />
+                  )}
+                </HeaderAction>
+              </Tooltip>
               {auth ? (
                 <Tooltip title={`Sign out ${auth.username}`}>
                   <HeaderAction
                     onClick={handleLogout}
                     aria-label="Sign out"
-                    sx={{ display: { xs: "none", sm: "inline-flex" } }}
+                    sx={{ display: { xs: "none", md: "inline-flex" } }}
                   >
                     <LogoutRounded />
                   </HeaderAction>
@@ -300,7 +302,7 @@ export function Header() {
                   <HeaderActionLink
                     to="/login"
                     aria-label="Sign in"
-                    sx={{ display: { xs: "none", sm: "inline-flex" } }}
+                    sx={{ display: { xs: "none", md: "inline-flex" } }}
                   >
                     <AccountCircleOutlined />
                   </HeaderActionLink>
@@ -313,6 +315,7 @@ export function Header() {
       <HeaderSpacer aria-hidden="true" />
 
       <Drawer
+        id="mobile-navigation"
         open={mobileOpen}
         onClose={closeMobileNav}
         ModalProps={{ keepMounted: true }}
@@ -320,18 +323,18 @@ export function Header() {
           display: { md: "none" },
           "& .MuiDrawer-paper": {
             width: "min(86vw, 340px)",
+            top: 68,
+            height: "calc(100% - 68px)",
             p: 2,
             borderRadius: 0,
           },
         }}
       >
-        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <BrandMark aria-hidden="true">
-              <AutoAwesomeRounded fontSize="small" />
-            </BrandMark>
-            <Typography fontWeight={900}>ASTER</Typography>
-          </Stack>
+        <Toolbar
+          disableGutters
+          sx={{ minHeight: "48px !important", justifyContent: "space-between" }}
+        >
+          <Typography fontWeight={800}>Shop categories</Typography>
           <IconButton onClick={closeMobileNav} aria-label="Close navigation">
             <CloseRounded />
           </IconButton>
@@ -342,13 +345,15 @@ export function Header() {
         </List>
         <Divider sx={{ my: 1 }} />
         <List>
-          <ListItemButton component={Link} to="/wishlist" onClick={closeMobileNav}>
-            <FavoriteBorderRounded sx={{ mr: 2 }} />
-            <ListItemText primary="Wishlist" />
-          </ListItemButton>
-          <ListItemButton component={Link} to="/cart" onClick={closeMobileNav}>
-            <ShoppingBagOutlined sx={{ mr: 2 }} />
-            <ListItemText primary="Shopping bag" />
+          <ListItemButton onClick={toggleMode}>
+            {mode === "light" ? (
+              <DarkModeOutlined sx={{ mr: 2 }} />
+            ) : (
+              <LightModeOutlined sx={{ mr: 2 }} />
+            )}
+            <ListItemText
+              primary={`Use ${mode === "light" ? "dark" : "light"} theme`}
+            />
           </ListItemButton>
           {auth ? (
             <ListItemButton onClick={handleLogout}>
