@@ -127,6 +127,7 @@ affected flow.
 | QA-1 | Review and record user-reported application bugs | DONE | Fixed app bar and scroll-stable Sort menu; retained hero content through smooth category transitions; verified desktop, dark, and 390px states |
 | DESIGN-5 | Increase hero depth while preserving the storefront direction | DONE | Layered geometric color blocks, offset product plate, and stronger responsive hero palette |
 | QA-2 | Refine mobile header and drawer behavior | DONE | Wishlist/cart stay in the app bar; theme/session actions moved into the drawer; app-bar and in-drawer close controls verified at 390px |
+| QA-3 | Keep the hero accent edge continuous above layered child backgrounds | DONE | Structural 4px theme-aware border verified continuously across desktop light and dark hero layouts |
 
 ## Progress Log
 
@@ -155,3 +156,5 @@ affected flow.
   featured-product backdrop.
 - Reworked mobile navigation around persistent shopping actions and verified
   app-bar close, drawer close, theme switching, and logout behavior.
+- Replaced the clipped inset hero accent with a continuous structural border
+  and verified the result in light and dark themes.

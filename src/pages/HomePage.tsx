@@ -30,8 +30,8 @@ import {
 const HeroBand = styled("section")(({ theme }) => ({
   overflow: "hidden",
   backgroundColor: theme.palette.mode === "light" ? "#dfe9e2" : "#102c24",
+  borderTop: `4px solid ${theme.palette.secondary.main}`,
   borderBottom: `1px solid ${theme.palette.divider}`,
-  boxShadow: `inset 0 4px 0 ${theme.palette.secondary.main}`,
 }));
 
 const HeroLayout = styled(Container)(({ theme }) => ({
