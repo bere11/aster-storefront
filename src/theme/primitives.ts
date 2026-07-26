@@ -8,31 +8,13 @@ export const PageContainer = styled(Container)(({ theme }) => ({
   },
 }));
 
-export const Eyebrow = styled(Typography)(({ theme }) => ({
-  display: "inline-flex",
-  alignItems: "center",
-  gap: theme.spacing(1),
-  marginBottom: theme.spacing(1.5),
-  color: theme.palette.secondary.main,
-  fontSize: "0.72rem",
-  fontWeight: 800,
-  letterSpacing: 0,
-  lineHeight: 1.2,
-  textTransform: "uppercase",
-  "&::before": {
-    width: 24,
-    height: 2,
-    backgroundColor: "currentColor",
-    content: '""',
-  },
-}));
-
 export const PageTitle = styled(Typography)(({ theme }) => ({
   maxWidth: 760,
-  fontFamily: 'Georgia, "Times New Roman", serif',
+  fontFamily:
+    '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif',
   fontSize: "2.6rem",
-  fontWeight: 500,
-  lineHeight: 1,
+  fontWeight: 800,
+  lineHeight: 1.05,
   overflowWrap: "anywhere",
   [theme.breakpoints.up("sm")]: {
     fontSize: "3.6rem",

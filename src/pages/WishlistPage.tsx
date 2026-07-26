@@ -10,7 +10,6 @@ import { ProductCard } from "../components/ProductCard";
 import { useProducts } from "../query/queries";
 import { useAppState } from "../state/AppState";
 import {
-  Eyebrow,
   PageContainer,
   PageTitle,
   ProductGrid,
@@ -26,7 +25,6 @@ export function WishlistPage() {
   return (
     <PageContainer className="route-enter">
       <Stack sx={{ mb: { xs: 3.5, md: 5 } }}>
-        <Eyebrow>Keep for later</Eyebrow>
         <PageTitle as="h1" variant="h2">
           Wishlist
         </PageTitle>

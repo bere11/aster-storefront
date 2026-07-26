@@ -52,7 +52,7 @@ const ImageFrame = styled(Box)(({ theme }) => ({
       ? alpha(theme.palette.primary.main, 0.055)
       : alpha(theme.palette.common.white, 0.045),
   border: `1px solid ${theme.palette.divider}`,
-  borderRadius: 6,
+  borderRadius: 8,
   transition:
     "border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease",
   [theme.breakpoints.up("sm")]: {
@@ -70,16 +70,6 @@ const ProductImage = styled("img")(({ theme }) => ({
   objectFit: "contain",
   mixBlendMode: theme.palette.mode === "light" ? "multiply" : "normal",
   transition: "transform var(--motion-medium) var(--ease-out)",
-}));
-
-const ProductIndex = styled("span")(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(1.25),
-  left: theme.spacing(1.25),
-  color: theme.palette.text.secondary,
-  fontSize: "0.68rem",
-  fontWeight: 800,
-  lineHeight: 1,
 }));
 
 const WishlistAction = styled(IconButton)(({ theme }) => ({
@@ -164,9 +154,6 @@ export function ProductCard({
         aria-label={`View ${product.title}`}
       >
         <ImageFrame>
-          <ProductIndex aria-hidden="true">
-            {String(index + 1).padStart(2, "0")}
-          </ProductIndex>
           <ProductImage
             className="product-image"
             src={product.image}
@@ -186,7 +173,6 @@ export function ProductCard({
               variant="caption"
               color="text.secondary"
               noWrap
-              sx={{ textTransform: "uppercase" }}
             >
               {categoryLabel(product.category)}
             </Typography>
@@ -211,6 +197,7 @@ export function ProductCard({
           </ProductTitle>
           <Typography
             variant="h6"
+            color="primary.main"
             sx={{ mt: "auto", pt: 1.25, fontWeight: 800 }}
           >
             {formatPrice(product.price)}

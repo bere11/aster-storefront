@@ -6,7 +6,6 @@ import {
 } from "@mui/material/styles";
 import { useAppState } from "../state/AppState";
 
-const displayFont = 'Georgia, "Times New Roman", serif';
 const bodyFont =
   '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif';
 
@@ -44,32 +43,32 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
         typography: {
           fontFamily: bodyFont,
           h1: {
-            fontFamily: displayFont,
-            fontWeight: 500,
-            letterSpacing: 0,
-            lineHeight: 0.98,
-          },
-          h2: {
-            fontFamily: displayFont,
-            fontWeight: 500,
+            fontFamily: bodyFont,
+            fontWeight: 800,
             letterSpacing: 0,
             lineHeight: 1,
           },
-          h3: {
-            fontFamily: displayFont,
-            fontWeight: 500,
+          h2: {
+            fontFamily: bodyFont,
+            fontWeight: 780,
             letterSpacing: 0,
             lineHeight: 1.05,
           },
+          h3: {
+            fontFamily: bodyFont,
+            fontWeight: 760,
+            letterSpacing: 0,
+            lineHeight: 1.08,
+          },
           h4: {
-            fontFamily: displayFont,
-            fontWeight: 500,
+            fontFamily: bodyFont,
+            fontWeight: 740,
             letterSpacing: 0,
             lineHeight: 1.1,
           },
           h5: {
-            fontFamily: displayFont,
-            fontWeight: 600,
+            fontFamily: bodyFont,
+            fontWeight: 720,
             letterSpacing: 0,
           },
           h6: {

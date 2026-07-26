@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 import { createCart } from "../api/storeApi";
 import { EmptyState } from "../components/Feedback";
 import { useAppState } from "../state/AppState";
-import { Eyebrow, PageContainer, PageTitle } from "../theme/primitives";
+import { PageContainer, PageTitle } from "../theme/primitives";
 import { formatPrice, getUserIdFromToken } from "../utils/products";
 
 export function CartPage() {
@@ -68,7 +68,6 @@ export function CartPage() {
         sx={{ mb: { xs: 3, md: 5 } }}
       >
         <Box>
-          <Eyebrow>Your selection</Eyebrow>
           <PageTitle as="h1" variant="h2">
             Shopping bag
           </PageTitle>

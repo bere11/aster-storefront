@@ -1,3 +1,4 @@
+import AutoAwesomeRounded from "@mui/icons-material/AutoAwesomeRounded";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link, Outlet } from "react-router-dom";
@@ -16,32 +17,31 @@ const Main = styled("main")({
 
 const Footer = styled("footer")(({ theme }) => ({
   marginTop: "auto",
-  paddingBlock: theme.spacing(5),
+  paddingBlock: theme.spacing(4),
   color: theme.palette.text.primary,
   backgroundColor: theme.palette.background.paper,
   borderTop: `1px solid ${theme.palette.divider}`,
-  [theme.breakpoints.up("md")]: {
-    paddingBlock: theme.spacing(7),
-  },
 }));
 
-const FooterGrid = styled(Container)(({ theme }) => ({
-  display: "grid",
-  gap: theme.spacing(4),
+const FooterInner = styled(Container)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
-    gridTemplateColumns: "minmax(0, 1.4fr) repeat(2, minmax(150px, 0.5fr))",
-    alignItems: "end",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 }));
 
-const FooterLink = styled(Link)(({ theme }) => ({
+const FooterBrand = styled(Link)(({ theme }) => ({
+  display: "inline-flex",
   width: "fit-content",
-  color: theme.palette.text.secondary,
+  alignItems: "center",
+  gap: theme.spacing(1),
+  color: "inherit",
+  fontWeight: 900,
   textDecoration: "none",
-  transition: "color var(--motion-fast) ease",
-  "&:hover": {
-    color: theme.palette.secondary.main,
-  },
 }));
 
 export function AppLayout() {
@@ -55,38 +55,23 @@ export function AppLayout() {
         <Outlet />
       </Main>
       <Footer>
-        <FooterGrid>
-          <Box>
-            <Typography
-              sx={{
-                fontFamily: 'Georgia, "Times New Roman", serif',
-                fontSize: "2rem",
-                lineHeight: 1,
-              }}
-            >
-              Aster
+        <FooterInner>
+          <FooterBrand to="/">
+            <AutoAwesomeRounded color="primary" fontSize="small" />
+            <span>ASTER</span>
+          </FooterBrand>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 0.5, sm: 3 }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              Thoughtful goods, powered by Fake Store API.
             </Typography>
-            <Typography color="text.secondary" sx={{ mt: 1, maxWidth: 360 }}>
-              Independent goods selected for useful, everyday living.
+            <Typography variant="body2" color="text.secondary">
+              2026
             </Typography>
-          </Box>
-
-          <Stack component="nav" aria-label="Footer shop links" spacing={1}>
-            <Typography variant="caption" fontWeight={800}>
-              SHOP
-            </Typography>
-            <FooterLink to="/">Collection</FooterLink>
-            <FooterLink to="/wishlist">Wishlist</FooterLink>
           </Stack>
-
-          <Stack spacing={1}>
-            <Typography variant="caption" fontWeight={800}>
-              ACCOUNT
-            </Typography>
-            <FooterLink to="/cart">Shopping bag</FooterLink>
-            <FooterLink to="/login">Sign in</FooterLink>
-          </Stack>
-        </FooterGrid>
+        </FooterInner>
       </Footer>
     </SiteShell>
   );

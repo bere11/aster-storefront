@@ -1,4 +1,5 @@
 import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
+import AutoAwesomeRounded from "@mui/icons-material/AutoAwesomeRounded";
 import CloseRounded from "@mui/icons-material/CloseRounded";
 import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
 import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
@@ -9,7 +10,6 @@ import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
 import {
   AppBar,
   Badge,
-  Box,
   Container,
   Divider,
   Drawer,
@@ -45,23 +45,6 @@ const StoreAppBar = styled(AppBar)(({ theme }) => ({
   backdropFilter: "blur(14px)",
 }));
 
-const UtilityBar = styled(Box)(({ theme }) => ({
-  display: "none",
-  color: theme.palette.primary.contrastText,
-  backgroundColor:
-    theme.palette.mode === "light" ? "#153f36" : theme.palette.background.paper,
-  [theme.breakpoints.up("sm")]: {
-    display: "block",
-  },
-}));
-
-const UtilityInner = styled(Container)({
-  display: "flex",
-  minHeight: 28,
-  alignItems: "center",
-  justifyContent: "space-between",
-});
-
 const MainToolbar = styled(Toolbar)(({ theme }) => ({
   minHeight: 68,
   [theme.breakpoints.up("md")]: {
@@ -89,18 +72,19 @@ const BrandMark = styled("span")(({ theme }) => ({
   placeItems: "center",
   color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.primary.main,
-  borderRadius: 2,
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "1.25rem",
-  fontWeight: 700,
+  borderRadius: "50%",
   lineHeight: 1,
+  transition: "transform var(--motion-medium) var(--ease-out)",
+  [`${BrandLink}:hover &`]: {
+    transform: "rotate(12deg) scale(1.04)",
+  },
 }));
 
 const DesktopCategories = styled("nav")(({ theme }) => ({
   display: "none",
   minWidth: 0,
   flex: 1,
-  alignItems: "stretch",
+  alignItems: "center",
   alignSelf: "stretch",
   gap: theme.spacing(0.5),
   [theme.breakpoints.up("md")]: {
@@ -113,35 +97,21 @@ const CategoryLink = styled(Link)(({ theme }) => ({
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  minHeight: 0,
+  minHeight: 42,
   paddingInline: theme.spacing(1.5),
   color: theme.palette.text.secondary,
-  borderRadius: 0,
+  borderRadius: 999,
   fontSize: "0.875rem",
   fontWeight: 700,
   textDecoration: "none",
   whiteSpace: "nowrap",
-  "&::after": {
-    position: "absolute",
-    right: theme.spacing(1.5),
-    bottom: 0,
-    left: theme.spacing(1.5),
-    height: 3,
-    backgroundColor: theme.palette.secondary.main,
-    content: '""',
-    transform: "scaleX(0)",
-    transformOrigin: "left",
-    transition: "transform var(--motion-fast) var(--ease-out)",
-  },
   "&:hover": {
     color: theme.palette.text.primary,
-    backgroundColor: "transparent",
+    backgroundColor: theme.palette.action.hover,
   },
   '&[aria-current="page"]': {
-    color: theme.palette.text.primary,
-  },
-  '&[aria-current="page"]::after': {
-    transform: "scaleX(1)",
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 
@@ -223,17 +193,6 @@ export function Header() {
   return (
     <>
       <StoreAppBar position="sticky">
-        <UtilityBar>
-          <UtilityInner>
-            <Typography variant="caption" fontWeight={700}>
-              Complimentary delivery on every demo order
-            </Typography>
-            <Typography variant="caption">
-              Independent goods / Fake Store API
-            </Typography>
-          </UtilityInner>
-        </UtilityBar>
-
         <Container>
           <MainToolbar disableGutters>
             <IconButton
@@ -245,23 +204,12 @@ export function Header() {
             </IconButton>
 
             <BrandLink to="/" aria-label="Aster home">
-              <BrandMark aria-hidden="true">A</BrandMark>
-              <Box>
-                <Typography
-                  component="span"
-                  sx={{ display: "block", fontWeight: 900, lineHeight: 1 }}
-                >
-                  ASTER
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{ display: { xs: "none", sm: "block" }, mt: 0.35 }}
-                >
-                  Goods department
-                </Typography>
-              </Box>
+              <BrandMark aria-hidden="true">
+                <AutoAwesomeRounded fontSize="small" />
+              </BrandMark>
+              <Typography component="span" sx={{ fontWeight: 900, lineHeight: 1 }}>
+                ASTER
+              </Typography>
             </BrandLink>
 
             <DesktopCategories aria-label="Product categories">
@@ -371,8 +319,10 @@ export function Header() {
       >
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           <Stack direction="row" alignItems="center" spacing={1}>
-            <BrandMark aria-hidden="true">A</BrandMark>
-            <Typography fontWeight={900}>ASTER / BROWSE</Typography>
+            <BrandMark aria-hidden="true">
+              <AutoAwesomeRounded fontSize="small" />
+            </BrandMark>
+            <Typography fontWeight={900}>ASTER</Typography>
           </Stack>
           <IconButton onClick={closeMobileNav} aria-label="Close navigation">
             <CloseRounded />
