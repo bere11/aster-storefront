@@ -24,7 +24,6 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ErrorPanel } from "../components/Feedback";
 import { useProduct } from "../query/queries";
 import { useAppState } from "../state/AppState";
-import { Eyebrow } from "../theme/primitives";
 import { categoryLabel, formatPrice } from "../utils/products";
 
 const DetailPage = styled(Container)(({ theme }) => ({
@@ -59,7 +58,7 @@ const ProductStage = styled(Box)(({ theme }) => ({
       ? alpha(theme.palette.info.main, 0.09)
       : alpha(theme.palette.common.white, 0.04),
   border: `1px solid ${theme.palette.divider}`,
-  borderRadius: 6,
+  borderRadius: 8,
   [theme.breakpoints.up("sm")]: {
     minHeight: 520,
     padding: theme.spacing(7),
@@ -67,21 +66,6 @@ const ProductStage = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
     minHeight: 650,
     padding: theme.spacing(9),
-  },
-}));
-
-const StageNumber = styled("span")(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(2),
-  left: theme.spacing(2),
-  color: alpha(theme.palette.text.primary, 0.35),
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "4rem",
-  lineHeight: 1,
-  [theme.breakpoints.up("md")]: {
-    top: theme.spacing(3),
-    left: theme.spacing(3),
-    fontSize: "6rem",
   },
 }));
 
@@ -110,10 +94,11 @@ const DetailInfo = styled(Stack)(({ theme }) => ({
 
 const ProductTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(0.5),
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "2.8rem",
-  fontWeight: 500,
-  lineHeight: 1,
+  fontFamily:
+    '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif',
+  fontSize: "2.65rem",
+  fontWeight: 800,
+  lineHeight: 1.04,
   overflowWrap: "anywhere",
   [theme.breakpoints.up("sm")]: {
     fontSize: "3.8rem",
@@ -226,14 +211,17 @@ export function ProductPage() {
 
       <DetailLayout>
         <ProductStage>
-          <StageNumber aria-hidden="true">
-            {String(product.id).padStart(2, "0")}
-          </StageNumber>
           <ProductVisual src={product.image} alt={product.title} />
         </ProductStage>
 
         <DetailInfo>
-          <Eyebrow>{categoryLabel(product.category)}</Eyebrow>
+          <Typography
+            variant="overline"
+            color="secondary.main"
+            sx={{ fontWeight: 800 }}
+          >
+            {categoryLabel(product.category)}
+          </Typography>
           <ProductTitle as="h1" variant="h2">
             {product.title}
           </ProductTitle>

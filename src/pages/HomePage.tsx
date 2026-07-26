@@ -1,5 +1,6 @@
 import ArrowDownwardRounded from "@mui/icons-material/ArrowDownwardRounded";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import AutoAwesomeRounded from "@mui/icons-material/AutoAwesomeRounded";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import {
   Box,
@@ -17,7 +18,7 @@ import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { EmptyState, ErrorPanel, ProductGridSkeleton } from "../components/Feedback";
 import { ProductCard } from "../components/ProductCard";
-import { Eyebrow, ProductGrid } from "../theme/primitives";
+import { ProductGrid } from "../theme/primitives";
 import { useProducts } from "../query/queries";
 import {
   categoryLabel,
@@ -55,16 +56,17 @@ const HeroCopy = styled(Box)(({ theme }) => ({
 
 const HeroTitle = styled(Typography)(({ theme }) => ({
   maxWidth: 780,
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "2.75rem",
-  fontWeight: 500,
-  lineHeight: 0.98,
+  fontFamily:
+    '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif',
+  fontSize: "2.9rem",
+  fontWeight: 800,
+  lineHeight: 1.02,
   overflowWrap: "anywhere",
   [theme.breakpoints.up("sm")]: {
-    fontSize: "4.6rem",
+    fontSize: "4.2rem",
   },
   [theme.breakpoints.up("lg")]: {
-    fontSize: "5.65rem",
+    fontSize: "5.15rem",
   },
 }));
 
@@ -138,21 +140,6 @@ const HeroImage = styled("img")(({ theme }) => ({
   },
 }));
 
-const HeroNumber = styled("span")(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(2),
-  left: theme.spacing(2),
-  color: alpha(theme.palette.text.primary, 0.38),
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "4rem",
-  lineHeight: 1,
-  [theme.breakpoints.up("md")]: {
-    top: theme.spacing(3),
-    left: theme.spacing(3),
-    fontSize: "6.5rem",
-  },
-}));
-
 const HeroProductBar = styled(Link)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "minmax(0, 1fr) auto",
@@ -211,28 +198,25 @@ export function HomePage() {
     [products, searchTerm, sort],
   );
   const featuredProduct = products[0];
-  const collectionLabel = category ? categoryLabel(category) : "The full edit";
+  const collectionLabel = category ? categoryLabel(category) : "the collection";
 
   return (
     <Box className="route-enter">
       <HeroBand aria-labelledby="home-heading">
         <HeroLayout>
           <HeroCopy>
-            <Eyebrow>ASTER / EDIT NO. 01</Eyebrow>
             <HeroTitle id="home-heading" as="h1" variant="h1">
               {category
-                ? `${categoryLabel(category)}, considered.`
-                : "Everyday goods, edited with intent."}
+                ? `${categoryLabel(category)}, chosen well.`
+                : "Useful things, chosen well."}
             </HeroTitle>
             <HeroDescription>
               <Box component="span" sx={{ display: { xs: "inline", sm: "none" } }}>
-                Useful pieces across wardrobe, jewelry, and technology, chosen
-                for everyday life.
+                Wardrobe, jewelry, and technology selected for everyday life.
               </Box>
               <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
-                A useful collection across wardrobe, jewelry, and technology.
-                Selected with a preference for function, clarity, and things
-                worth keeping close.
+                A considered collection of wardrobe essentials, jewelry, and
+                technology for life in motion.
               </Box>
             </HeroDescription>
             <HeroActions spacing={1.5}>
@@ -241,7 +225,7 @@ export function HomePage() {
                 variant="contained"
                 endIcon={<ArrowDownwardRounded />}
               >
-                Browse {collectionLabel.toLowerCase()}
+                Browse {category ? collectionLabel.toLowerCase() : "the collection"}
               </Button>
               {featuredProduct && (
                 <Button
@@ -261,7 +245,6 @@ export function HomePage() {
             {featuredProduct ? (
               <>
                 <HeroImageLink to={`/products/${featuredProduct.id}`}>
-                  <HeroNumber aria-hidden="true">01</HeroNumber>
                   <HeroImage
                     className="hero-product-image"
                     src={featuredProduct.image}
@@ -270,9 +253,12 @@ export function HomePage() {
                 </HeroImageLink>
                 <HeroProductBar to={`/products/${featuredProduct.id}`}>
                   <Box sx={{ minWidth: 0 }}>
-                    <Typography variant="caption" sx={{ opacity: 0.72 }}>
-                      FEATURED / {categoryLabel(featuredProduct.category)}
-                    </Typography>
+                    <Stack direction="row" alignItems="center" spacing={0.6}>
+                      <AutoAwesomeRounded sx={{ fontSize: 15, opacity: 0.8 }} />
+                      <Typography variant="caption" sx={{ opacity: 0.78 }}>
+                        Featured pick
+                      </Typography>
+                    </Stack>
                     <Typography fontWeight={800} noWrap>
                       {featuredProduct.title}
                     </Typography>
@@ -309,9 +295,8 @@ export function HomePage() {
         <Container>
           <CollectionHeader>
             <Box>
-              <Eyebrow>{category ? "FILTERED COLLECTION" : "CATALOG / 01"}</Eyebrow>
               <Typography id="collection-heading" component="h2" variant="h2">
-                {category ? categoryLabel(category) : "Browse the collection"}
+                {category ? categoryLabel(category) : "Shop the collection"}
               </Typography>
               {!isLoading && !isError && (
                 <Typography color="text.secondary" sx={{ mt: 1 }}>

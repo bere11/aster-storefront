@@ -61,7 +61,7 @@ Router, TanStack React Query, Axios, and Vitest.
 | BONUS-2.3 | Use SCSS or CSS variables for design-system values | DONE | Emotion-powered MUI styled components plus CSS custom properties centralize reusable structures, spacing, geometry, elevation, and motion |
 | BONUS-2.4 | Add one or two unit tests | DONE | Vitest covers critical product and redirect utilities |
 | BONUS-2.5 | Implement state-management logic | DONE | Typed Context, reducer, derived state, and local persistence |
-| BONUS-3.1 | Provide polished visuals and smooth view transitions | DONE | Editorial product-led design, reusable styled components, responsive layouts, and reduced-motion-aware transitions |
+| BONUS-3.1 | Provide polished visuals and smooth view transitions | DONE | Distinct branded storefront, reusable styled components, responsive layouts, and reduced-motion-aware transitions |
 | BONUS-3.2 | Display loading states | DONE | Product skeleton grids and product-detail skeletons |
 | BONUS-3.3 | Display network error states | DONE | Retryable visual error panels and mutation alerts |
 | BONUS-3.4 | Support light and dark themes | DONE | Persisted MUI palette-mode switching |
@@ -120,8 +120,9 @@ affected flow.
 | GOV-1 | Add living project specification and agent instructions | DONE | `PROJECT_SPEC.md` and `AGENTS.md` |
 | GOV-2 | Add repository contribution and PR templates | DONE | `CONTRIBUTING.md` and `.github/PULL_REQUEST_TEMPLATE.md` |
 | GOV-3 | Protect `main` with PR and CI requirements | DONE | Active GitHub ruleset requires PRs and the CI status check |
-| DESIGN-1 | Replace the generic visual treatment with a custom editorial storefront system | DONE | API-backed product hero, styled navigation, indexed product frames, sharper surfaces, and shared typography |
+| DESIGN-1 | Replace the generic visual treatment with a custom product-led storefront system | DONE | API-backed product hero, styled navigation, merchandise-focused cards, and shared typography |
 | DESIGN-2 | Verify responsive and dark-theme behavior for the new system | DONE | Desktop, compact, true 390px, and dark-mode browser audits; no horizontal overflow |
+| DESIGN-3 | Refine Aster away from an editorial/blog treatment | DONE | Restored sparkle identity, sans-serif hierarchy, direct shopping copy, simplified labels, favicon, and manifest |
 | QA-1 | Review and record user-reported application bugs | TODO | Planned for follow-up prompts |
 
 ## Progress Log
@@ -137,7 +138,9 @@ affected flow.
 
 - Introduced reusable Emotion-powered MUI styled components.
 - Replaced the decorative hero with a responsive API-backed featured product.
-- Added an editorial type, color, surface, and motion system.
+- Added a custom type, color, surface, and motion system.
 - Refined the header, product cards, product detail, cart, wishlist, login,
   feedback states, and footer.
 - Verified light and dark layouts at desktop and mobile widths.
+- Simplified the presentation into a friendly modern storefront, restored the
+  Aster sparkle mark, and added favicon and install metadata.

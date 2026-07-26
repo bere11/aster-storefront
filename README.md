@@ -20,7 +20,7 @@ pull request expectations are documented in
 - Protected, locally persisted shopping bag and wishlist
 - Simulated order submission to the Fake Store cart endpoint
 - Responsive desktop, tablet, and mobile navigation
-- Editorial storefront design with API-backed featured merchandise
+- Distinct product-led storefront design with API-backed featured merchandise
 - Light and dark themes
 - Loading skeletons, retryable network errors, empty states, and route transitions
 - Semantic landmarks, keyboard-friendly controls, visible focus states, skip link,
