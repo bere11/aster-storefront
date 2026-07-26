@@ -29,8 +29,9 @@ import {
 
 const HeroBand = styled("section")(({ theme }) => ({
   overflow: "hidden",
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.mode === "light" ? "#e8efea" : "#112720",
   borderBottom: `1px solid ${theme.palette.divider}`,
+  boxShadow: `inset 0 4px 0 ${theme.palette.secondary.main}`,
 }));
 
 const HeroLayout = styled(Container)(({ theme }) => ({
@@ -95,13 +96,16 @@ const HeroVisual = styled(Box)(({ theme }) => ({
   position: "relative",
   display: "grid",
   minHeight: 275,
-  gridTemplateRows: "1fr auto",
+  gridTemplateRows: "minmax(0, 1fr) minmax(82px, auto)",
   overflow: "hidden",
   backgroundColor:
     theme.palette.mode === "light"
       ? alpha(theme.palette.info.main, 0.14)
       : alpha(theme.palette.info.main, 0.1),
   borderInline: `1px solid ${theme.palette.divider}`,
+  "&:hover .hero-product-image, &:focus-within .hero-product-image": {
+    transform: "translateY(-5px) scale(1.025)",
+  },
   [theme.breakpoints.up("md")]: {
     minHeight: 570,
   },
@@ -117,9 +121,6 @@ const HeroImageLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
   [theme.breakpoints.up("md")]: {
     padding: theme.spacing(7),
-  },
-  "&:hover img": {
-    transform: "translateY(-5px) scale(1.02)",
   },
 }));
 
@@ -142,7 +143,8 @@ const HeroImage = styled("img")(({ theme }) => ({
 
 const HeroProductBar = styled(Link)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "minmax(0, 1fr) auto",
+  minHeight: 82,
+  gridTemplateColumns: "minmax(0, 1fr) minmax(92px, auto)",
   gap: theme.spacing(2),
   alignItems: "center",
   padding: theme.spacing(2.25, 2.5),
@@ -150,10 +152,10 @@ const HeroProductBar = styled(Link)(({ theme }) => ({
   backgroundColor:
     theme.palette.mode === "light" ? theme.palette.primary.main : "#213f37",
   textDecoration: "none",
-  "&:hover svg": {
+  "&:hover .hero-product-arrow": {
     transform: "translateX(4px)",
   },
-  "& svg": {
+  "& .hero-product-arrow": {
     transition: "transform var(--motion-fast) ease",
   },
 }));
@@ -191,7 +193,13 @@ export function HomePage() {
   const category = searchParams.get("category") ?? undefined;
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState<ProductSort>("featured");
-  const { data: products = [], isLoading, isError, refetch } = useProducts(category);
+  const {
+    data: products = [],
+    isFetching,
+    isLoading,
+    isError,
+    refetch,
+  } = useProducts(category);
 
   const visibleProducts = useMemo(
     () => filterAndSortProducts(products, searchTerm, sort),
@@ -204,7 +212,10 @@ export function HomePage() {
     <Box className="route-enter">
       <HeroBand aria-labelledby="home-heading">
         <HeroLayout>
-          <HeroCopy>
+          <HeroCopy
+            className="hero-copy-transition"
+            key={category ?? "all-products"}
+          >
             <HeroTitle id="home-heading" as="h1" variant="h1">
               {category
                 ? `${categoryLabel(category)}, chosen well.`
@@ -241,17 +252,24 @@ export function HomePage() {
             </HeroActions>
           </HeroCopy>
 
-          <HeroVisual aria-label="Featured product">
+          <HeroVisual aria-label="Featured product" aria-busy={isFetching}>
             {featuredProduct ? (
               <>
-                <HeroImageLink to={`/products/${featuredProduct.id}`}>
+                <HeroImageLink
+                  to={`/products/${featuredProduct.id}`}
+                  key={`${featuredProduct.id}-image`}
+                >
                   <HeroImage
                     className="hero-product-image"
                     src={featuredProduct.image}
                     alt={featuredProduct.title}
                   />
                 </HeroImageLink>
-                <HeroProductBar to={`/products/${featuredProduct.id}`}>
+                <HeroProductBar
+                  className="hero-product-bar"
+                  to={`/products/${featuredProduct.id}`}
+                  key={`${featuredProduct.id}-details`}
+                >
                   <Box sx={{ minWidth: 0 }}>
                     <Stack direction="row" alignItems="center" spacing={0.6}>
                       <AutoAwesomeRounded sx={{ fontSize: 15, opacity: 0.8 }} />
@@ -267,7 +285,7 @@ export function HomePage() {
                     <Typography fontWeight={800}>
                       {formatPrice(featuredProduct.price)}
                     </Typography>
-                    <ArrowForwardRounded />
+                    <ArrowForwardRounded className="hero-product-arrow" />
                   </Stack>
                 </HeroProductBar>
               </>
@@ -328,6 +346,13 @@ export function HomePage() {
                 label="Sort"
                 value={sort}
                 onChange={(event) => setSort(event.target.value as ProductSort)}
+                slotProps={{
+                  select: {
+                    MenuProps: {
+                      disableScrollLock: true,
+                    },
+                  },
+                }}
                 sx={{ minWidth: 165 }}
               >
                 <MenuItem value="featured">Featured</MenuItem>

@@ -123,7 +123,8 @@ affected flow.
 | DESIGN-1 | Replace the generic visual treatment with a custom product-led storefront system | DONE | API-backed product hero, styled navigation, merchandise-focused cards, and shared typography |
 | DESIGN-2 | Verify responsive and dark-theme behavior for the new system | DONE | Desktop, compact, true 390px, and dark-mode browser audits; no horizontal overflow |
 | DESIGN-3 | Refine Aster away from an editorial/blog treatment | DONE | Restored sparkle identity, sans-serif hierarchy, direct shopping copy, simplified labels, favicon, and manifest |
-| QA-1 | Review and record user-reported application bugs | TODO | Planned for follow-up prompts |
+| DESIGN-4 | Add character to the hero without returning to an editorial layout | DONE | Branded sage-and-coral backdrop, stable featured-product bar, and shared product hover treatment |
+| QA-1 | Review and record user-reported application bugs | DONE | Fixed app bar and scroll-stable Sort menu; retained hero content through smooth category transitions; verified desktop, dark, and 390px states |
 
 ## Progress Log
 
@@ -144,3 +145,7 @@ affected flow.
 - Verified light and dark layouts at desktop and mobile widths.
 - Simplified the presentation into a friendly modern storefront, restored the
   Aster sparkle mark, and added favicon and install metadata.
+- Added a branded hero backdrop and repaired the app bar, Sort menu, category
+  transition, and featured-product hover interactions.
+- Verified stable header and menu geometry, retained category-loading content,
+  dark mode, and a 390px viewport in Chrome.

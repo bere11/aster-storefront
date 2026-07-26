@@ -113,8 +113,36 @@ img {
   }
 }
 
+.hero-copy-transition {
+  animation: hero-copy-enter 420ms var(--ease-out) both;
+}
+
 .hero-product-image {
-  animation: image-reveal 700ms var(--ease-out) 120ms both;
+  animation: image-reveal 620ms var(--ease-out) 80ms backwards;
+}
+
+.hero-product-bar {
+  animation: hero-details-enter 360ms var(--ease-out) both;
+}
+
+@keyframes hero-copy-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-details-enter {
+  from {
+    opacity: 0.72;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 :focus-visible {

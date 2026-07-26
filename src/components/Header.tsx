@@ -52,6 +52,14 @@ const MainToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
+const HeaderSpacer = styled("div")(({ theme }) => ({
+  flexShrink: 0,
+  height: 68,
+  [theme.breakpoints.up("md")]: {
+    height: 72,
+  },
+}));
+
 const BrandLink = styled(Link)(({ theme }) => ({
   display: "inline-flex",
   flexShrink: 0,
@@ -119,7 +127,6 @@ const HeaderActions = styled(Stack)(({ theme }) => ({
   flexShrink: 0,
   alignSelf: "stretch",
   marginLeft: theme.spacing(1),
-  borderLeft: `1px solid ${theme.palette.divider}`,
 }));
 
 const HeaderAction = styled(IconButton)(({ theme }) => ({
@@ -192,7 +199,7 @@ export function Header() {
 
   return (
     <>
-      <StoreAppBar position="sticky">
+      <StoreAppBar position="fixed">
         <Container>
           <MainToolbar disableGutters>
             <IconButton
@@ -303,6 +310,7 @@ export function Header() {
           </MainToolbar>
         </Container>
       </StoreAppBar>
+      <HeaderSpacer aria-hidden="true" />
 
       <Drawer
         open={mobileOpen}

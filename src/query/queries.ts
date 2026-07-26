@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getCategories, getProduct, getProducts } from "../api/storeApi";
 
 export const queryKeys = {
@@ -19,6 +19,7 @@ export function useProducts(category?: string) {
   return useQuery({
     queryKey: queryKeys.products(category),
     queryFn: () => getProducts(category),
+    placeholderData: keepPreviousData,
   });
 }
 
