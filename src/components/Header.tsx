@@ -10,7 +10,6 @@ import {
   AppBar,
   Badge,
   Box,
-  Button,
   Container,
   Divider,
   Drawer,
@@ -24,7 +23,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 import { useState } from "react";
 import {
   Link,
@@ -35,6 +34,148 @@ import {
 import { useCategories } from "../query/queries";
 import { useAppState } from "../state/AppState";
 import { categoryLabel } from "../utils/products";
+
+const StoreAppBar = styled(AppBar)(({ theme }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  color: theme.palette.text.primary,
+  backgroundColor: alpha(theme.palette.background.default, 0.94),
+  backgroundImage: "none",
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  boxShadow: "none",
+  backdropFilter: "blur(14px)",
+}));
+
+const UtilityBar = styled(Box)(({ theme }) => ({
+  display: "none",
+  color: theme.palette.primary.contrastText,
+  backgroundColor:
+    theme.palette.mode === "light" ? "#153f36" : theme.palette.background.paper,
+  [theme.breakpoints.up("sm")]: {
+    display: "block",
+  },
+}));
+
+const UtilityInner = styled(Container)({
+  display: "flex",
+  minHeight: 28,
+  alignItems: "center",
+  justifyContent: "space-between",
+});
+
+const MainToolbar = styled(Toolbar)(({ theme }) => ({
+  minHeight: 68,
+  [theme.breakpoints.up("md")]: {
+    minHeight: 72,
+  },
+}));
+
+const BrandLink = styled(Link)(({ theme }) => ({
+  display: "inline-flex",
+  flexShrink: 0,
+  alignItems: "center",
+  gap: theme.spacing(1.25),
+  marginRight: "auto",
+  color: "inherit",
+  textDecoration: "none",
+  [theme.breakpoints.up("md")]: {
+    marginRight: theme.spacing(4),
+  },
+}));
+
+const BrandMark = styled("span")(({ theme }) => ({
+  display: "grid",
+  width: 34,
+  height: 34,
+  placeItems: "center",
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.primary.main,
+  borderRadius: 2,
+  fontFamily: 'Georgia, "Times New Roman", serif',
+  fontSize: "1.25rem",
+  fontWeight: 700,
+  lineHeight: 1,
+}));
+
+const DesktopCategories = styled("nav")(({ theme }) => ({
+  display: "none",
+  minWidth: 0,
+  flex: 1,
+  alignItems: "stretch",
+  alignSelf: "stretch",
+  gap: theme.spacing(0.5),
+  [theme.breakpoints.up("md")]: {
+    display: "flex",
+  },
+}));
+
+const CategoryLink = styled(Link)(({ theme }) => ({
+  position: "relative",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: 0,
+  paddingInline: theme.spacing(1.5),
+  color: theme.palette.text.secondary,
+  borderRadius: 0,
+  fontSize: "0.875rem",
+  fontWeight: 700,
+  textDecoration: "none",
+  whiteSpace: "nowrap",
+  "&::after": {
+    position: "absolute",
+    right: theme.spacing(1.5),
+    bottom: 0,
+    left: theme.spacing(1.5),
+    height: 3,
+    backgroundColor: theme.palette.secondary.main,
+    content: '""',
+    transform: "scaleX(0)",
+    transformOrigin: "left",
+    transition: "transform var(--motion-fast) var(--ease-out)",
+  },
+  "&:hover": {
+    color: theme.palette.text.primary,
+    backgroundColor: "transparent",
+  },
+  '&[aria-current="page"]': {
+    color: theme.palette.text.primary,
+  },
+  '&[aria-current="page"]::after': {
+    transform: "scaleX(1)",
+  },
+}));
+
+const HeaderActions = styled(Stack)(({ theme }) => ({
+  flexShrink: 0,
+  alignSelf: "stretch",
+  marginLeft: theme.spacing(1),
+  borderLeft: `1px solid ${theme.palette.divider}`,
+}));
+
+const HeaderAction = styled(IconButton)(({ theme }) => ({
+  alignSelf: "stretch",
+  width: 44,
+  borderRadius: 0,
+  color: theme.palette.text.secondary,
+  "&:hover": {
+    color: theme.palette.text.primary,
+  },
+}));
+
+const HeaderActionLink = styled(Link)(({ theme }) => ({
+  display: "inline-flex",
+  width: 44,
+  alignSelf: "stretch",
+  alignItems: "center",
+  justifyContent: "center",
+  color: theme.palette.text.secondary,
+  textDecoration: "none",
+  transition: "background-color var(--motion-fast) ease, color var(--motion-fast) ease",
+  "&:hover": {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -53,12 +194,14 @@ export function Header() {
     navigate("/");
   };
 
+  const isAllActive = location.pathname === "/" && !activeCategory;
+
   const categoryItems = (
     <>
       <ListItemButton
         component={Link}
         to="/"
-        selected={location.pathname === "/" && !activeCategory}
+        selected={isAllActive}
         onClick={closeMobileNav}
       >
         <ListItemText primary="All products" />
@@ -79,20 +222,20 @@ export function Header() {
 
   return (
     <>
-      <AppBar
-        position="sticky"
-        color="transparent"
-        elevation={0}
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          bgcolor: (theme) => alpha(theme.palette.background.default, 0.88),
-          backdropFilter: "blur(18px)",
-          borderBottom: 1,
-          borderColor: "divider",
-        }}
-      >
+      <StoreAppBar position="sticky">
+        <UtilityBar>
+          <UtilityInner>
+            <Typography variant="caption" fontWeight={700}>
+              Complimentary delivery on every demo order
+            </Typography>
+            <Typography variant="caption">
+              Independent goods / Fake Store API
+            </Typography>
+          </UtilityInner>
+        </UtilityBar>
+
         <Container>
-          <Toolbar disableGutters sx={{ minHeight: { xs: 68, md: 76 } }}>
+          <MainToolbar disableGutters>
             <IconButton
               aria-label="Open navigation"
               onClick={() => setMobileOpen(true)}
@@ -101,103 +244,72 @@ export function Header() {
               <MenuRounded />
             </IconButton>
 
-            <Stack
-              component={Link}
-              to="/"
-              direction="row"
-              alignItems="center"
-              spacing={1.15}
-              sx={{
-                color: "inherit",
-                textDecoration: "none",
-                mr: { xs: "auto", md: 4 },
-              }}
-              aria-label="Aster home"
-            >
-              <Box
-                aria-hidden="true"
-                sx={{
-                  width: 34,
-                  height: 34,
-                  display: "grid",
-                  placeItems: "center",
-                  borderRadius: "50% 50% 48% 52%",
-                  color: "primary.contrastText",
-                  bgcolor: "primary.main",
-                  fontSize: 18,
-                  transform: "rotate(-8deg)",
-                }}
-              >
-                ✦
+            <BrandLink to="/" aria-label="Aster home">
+              <BrandMark aria-hidden="true">A</BrandMark>
+              <Box>
+                <Typography
+                  component="span"
+                  sx={{ display: "block", fontWeight: 900, lineHeight: 1 }}
+                >
+                  ASTER
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ display: { xs: "none", sm: "block" }, mt: 0.35 }}
+                >
+                  Goods department
+                </Typography>
               </Box>
-              <Typography
-                component="span"
-                sx={{ fontWeight: 800, letterSpacing: "0.14em" }}
-              >
-                ASTER
-              </Typography>
-            </Stack>
+            </BrandLink>
 
-            <Box
-              component="nav"
-              aria-label="Product categories"
-              sx={{
-                display: { xs: "none", md: "flex" },
-                alignItems: "center",
-                minWidth: 0,
-                mr: "auto",
-                gap: 0.5,
-              }}
-            >
-              <Button
-                component={Link}
+            <DesktopCategories aria-label="Product categories">
+              <CategoryLink
                 to="/"
-                color={location.pathname === "/" && !activeCategory ? "primary" : "inherit"}
-                variant={
-                  location.pathname === "/" && !activeCategory ? "contained" : "text"
-                }
-                size="small"
+                aria-current={isAllActive ? "page" : undefined}
               >
                 All
-              </Button>
+              </CategoryLink>
               {isLoading &&
                 Array.from({ length: 3 }, (_, index) => (
-                  <Skeleton key={index} width={72} height={36} />
+                  <Skeleton key={index} width={72} height={40} sx={{ mx: 1 }} />
                 ))}
               {isError && (
-                <Typography variant="caption" color="text.secondary">
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ alignSelf: "center", px: 2 }}
+                >
                   Categories unavailable
                 </Typography>
               )}
               {categories?.map((category) => (
-                <Button
-                  component={Link}
+                <CategoryLink
                   to={`/?category=${encodeURIComponent(category)}`}
-                  color={activeCategory === category ? "primary" : "inherit"}
-                  variant={activeCategory === category ? "contained" : "text"}
-                  size="small"
+                  aria-current={activeCategory === category ? "page" : undefined}
                   key={category}
-                  sx={{ whiteSpace: "nowrap", px: 1.5 }}
                 >
                   {categoryLabel(category)}
-                </Button>
+                </CategoryLink>
               ))}
-            </Box>
+            </DesktopCategories>
 
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing={{ xs: 0, sm: 0.5 }}
-              sx={{ flexShrink: 0 }}
-            >
+            <HeaderActions direction="row" alignItems="center">
               <Tooltip title={`Use ${mode === "light" ? "dark" : "light"} theme`}>
-                <IconButton onClick={toggleMode} aria-label={`Use ${mode === "light" ? "dark" : "light"} theme`}>
-                  {mode === "light" ? <DarkModeOutlined /> : <LightModeOutlined />}
-                </IconButton>
+                <HeaderAction
+                  onClick={toggleMode}
+                  aria-label={`Use ${mode === "light" ? "dark" : "light"} theme`}
+                >
+                  {mode === "light" ? (
+                    <DarkModeOutlined />
+                  ) : (
+                    <LightModeOutlined />
+                  )}
+                </HeaderAction>
               </Tooltip>
               <Tooltip title="Wishlist">
-                <IconButton
-                  component={Link}
+                <HeaderActionLink
                   to="/wishlist"
                   aria-label={`Wishlist, ${wishlist.length} items`}
                   sx={{ display: { xs: "none", sm: "inline-flex" } }}
@@ -205,11 +317,10 @@ export function Header() {
                   <Badge badgeContent={auth ? wishlist.length : 0} color="secondary">
                     <FavoriteBorderRounded />
                   </Badge>
-                </IconButton>
+                </HeaderActionLink>
               </Tooltip>
               <Tooltip title="Shopping bag">
-                <IconButton
-                  component={Link}
+                <HeaderActionLink
                   to="/cart"
                   aria-label={`Shopping bag, ${cartCount} items`}
                   sx={{ display: { xs: "none", sm: "inline-flex" } }}
@@ -217,34 +328,33 @@ export function Header() {
                   <Badge badgeContent={auth ? cartCount : 0} color="secondary">
                     <ShoppingBagOutlined />
                   </Badge>
-                </IconButton>
+                </HeaderActionLink>
               </Tooltip>
               {auth ? (
                 <Tooltip title={`Sign out ${auth.username}`}>
-                  <IconButton
+                  <HeaderAction
                     onClick={handleLogout}
                     aria-label="Sign out"
                     sx={{ display: { xs: "none", sm: "inline-flex" } }}
                   >
                     <LogoutRounded />
-                  </IconButton>
+                  </HeaderAction>
                 </Tooltip>
               ) : (
                 <Tooltip title="Sign in">
-                  <IconButton
-                    component={Link}
+                  <HeaderActionLink
                     to="/login"
                     aria-label="Sign in"
                     sx={{ display: { xs: "none", sm: "inline-flex" } }}
                   >
                     <AccountCircleOutlined />
-                  </IconButton>
+                  </HeaderActionLink>
                 </Tooltip>
               )}
-            </Stack>
-          </Toolbar>
+            </HeaderActions>
+          </MainToolbar>
         </Container>
-      </AppBar>
+      </StoreAppBar>
 
       <Drawer
         open={mobileOpen}
@@ -252,13 +362,18 @@ export function Header() {
         ModalProps={{ keepMounted: true }}
         sx={{
           display: { md: "none" },
-          "& .MuiDrawer-paper": { width: "min(86vw, 340px)", p: 2 },
+          "& .MuiDrawer-paper": {
+            width: "min(86vw, 340px)",
+            p: 2,
+            borderRadius: 0,
+          },
         }}
       >
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          <Typography sx={{ fontWeight: 800, letterSpacing: "0.12em" }}>
-            BROWSE
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <BrandMark aria-hidden="true">A</BrandMark>
+            <Typography fontWeight={900}>ASTER / BROWSE</Typography>
+          </Stack>
           <IconButton onClick={closeMobileNav} aria-label="Close navigation">
             <CloseRounded />
           </IconButton>

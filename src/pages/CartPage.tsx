@@ -9,7 +9,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -25,6 +24,7 @@ import { Link } from "react-router-dom";
 import { createCart } from "../api/storeApi";
 import { EmptyState } from "../components/Feedback";
 import { useAppState } from "../state/AppState";
+import { Eyebrow, PageContainer, PageTitle } from "../theme/primitives";
 import { formatPrice, getUserIdFromToken } from "../utils/products";
 
 export function CartPage() {
@@ -60,7 +60,7 @@ export function CartPage() {
   };
 
   return (
-    <Container className="route-enter" sx={{ py: { xs: 4, md: 7 } }}>
+    <PageContainer className="route-enter">
       <Stack
         direction="row"
         alignItems="flex-end"
@@ -68,16 +68,10 @@ export function CartPage() {
         sx={{ mb: { xs: 3, md: 5 } }}
       >
         <Box>
-          <Typography
-            variant="overline"
-            color="secondary.main"
-            sx={{ fontWeight: 800, letterSpacing: "0.13em" }}
-          >
-            Your selection
-          </Typography>
-          <Typography component="h1" variant="h2">
+          <Eyebrow>Your selection</Eyebrow>
+          <PageTitle as="h1" variant="h2">
             Shopping bag
-          </Typography>
+          </PageTitle>
         </Box>
         {cartLines.length > 0 && (
           <Button color="inherit" onClick={clearCart}>
@@ -131,7 +125,9 @@ export function CartPage() {
                     height: { xs: 120, sm: 160 },
                     p: 2,
                     bgcolor: "background.paper",
-                    borderRadius: 3,
+                    borderRadius: 1,
+                    border: 1,
+                    borderColor: "divider",
                   }}
                 >
                   <Box
@@ -215,7 +211,7 @@ export function CartPage() {
               position: { lg: "sticky" },
               top: { lg: 106 },
               p: { xs: 3, sm: 4 },
-              borderRadius: 4,
+              borderRadius: 1,
               border: 1,
               borderColor: "divider",
               boxShadow: "var(--shadow-soft)",
@@ -300,6 +296,6 @@ export function CartPage() {
           </Button>
         </DialogActions>
       </Dialog>
-    </Container>
+    </PageContainer>
   );
 }

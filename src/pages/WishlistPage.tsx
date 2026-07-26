@@ -1,5 +1,5 @@
 import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
   EmptyState,
@@ -9,6 +9,12 @@ import {
 import { ProductCard } from "../components/ProductCard";
 import { useProducts } from "../query/queries";
 import { useAppState } from "../state/AppState";
+import {
+  Eyebrow,
+  PageContainer,
+  PageTitle,
+  ProductGrid,
+} from "../theme/primitives";
 
 export function WishlistPage() {
   const { wishlist } = useAppState();
@@ -18,18 +24,12 @@ export function WishlistPage() {
   );
 
   return (
-    <Container className="route-enter" sx={{ py: { xs: 4, md: 7 } }}>
+    <PageContainer className="route-enter">
       <Stack sx={{ mb: { xs: 3.5, md: 5 } }}>
-        <Typography
-          variant="overline"
-          color="secondary.main"
-          sx={{ fontWeight: 800, letterSpacing: "0.13em" }}
-        >
-          Keep for later
-        </Typography>
-        <Typography component="h1" variant="h2">
+        <Eyebrow>Keep for later</Eyebrow>
+        <PageTitle as="h1" variant="h2">
           Wishlist
-        </Typography>
+        </PageTitle>
         {!isLoading && (
           <Typography color="text.secondary" sx={{ mt: 1 }}>
             {savedProducts.length} saved{" "}
@@ -57,24 +57,12 @@ export function WishlistPage() {
         />
       )}
       {!isLoading && !isError && savedProducts.length > 0 && (
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "repeat(2, minmax(0, 1fr))",
-              sm: "repeat(2, minmax(0, 1fr))",
-              md: "repeat(3, minmax(0, 1fr))",
-              lg: "repeat(4, minmax(0, 1fr))",
-            },
-            columnGap: { xs: 1.5, sm: 2.5, lg: 3 },
-            rowGap: { xs: 4, md: 6 },
-          }}
-        >
+        <ProductGrid>
           {savedProducts.map((product, index) => (
             <ProductCard product={product} index={index} key={product.id} />
           ))}
-        </Box>
+        </ProductGrid>
       )}
-    </Container>
+    </PageContainer>
   );
 }

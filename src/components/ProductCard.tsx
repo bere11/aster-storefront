@@ -1,20 +1,122 @@
-import FavoriteRounded from "@mui/icons-material/FavoriteRounded";
 import FavoriteBorderRounded from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteRounded from "@mui/icons-material/FavoriteRounded";
 import StarRounded from "@mui/icons-material/StarRounded";
 import {
   Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  Chip,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppState } from "../state/AppState";
 import type { Product } from "../types/api";
 import { categoryLabel, formatPrice } from "../utils/products";
+
+const ProductCardRoot = styled("article")({
+  position: "relative",
+  minWidth: 0,
+  height: "100%",
+});
+
+const ProductLink = styled(Link)(({ theme }) => ({
+  display: "flex",
+  height: "100%",
+  flexDirection: "column",
+  alignItems: "stretch",
+  color: "inherit",
+  borderRadius: 0,
+  textDecoration: "none",
+  "&:hover .product-image": {
+    transform: "scale(1.035)",
+  },
+  "&:hover .product-title": {
+    color: theme.palette.secondary.main,
+  },
+  "&:focus-visible": {
+    outline: `3px solid ${theme.palette.info.main}`,
+    outlineOffset: 4,
+  },
+}));
+
+const ImageFrame = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "grid",
+  width: "100%",
+  aspectRatio: "4 / 4.8",
+  placeItems: "center",
+  overflow: "hidden",
+  padding: theme.spacing(2.25),
+  backgroundColor:
+    theme.palette.mode === "light"
+      ? alpha(theme.palette.primary.main, 0.055)
+      : alpha(theme.palette.common.white, 0.045),
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: 6,
+  transition:
+    "border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease",
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(3.5),
+  },
+  [`${ProductLink}:hover &`]: {
+    borderColor: alpha(theme.palette.primary.main, 0.42),
+    boxShadow: "var(--shadow-lifted)",
+  },
+}));
+
+const ProductImage = styled("img")(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  objectFit: "contain",
+  mixBlendMode: theme.palette.mode === "light" ? "multiply" : "normal",
+  transition: "transform var(--motion-medium) var(--ease-out)",
+}));
+
+const ProductIndex = styled("span")(({ theme }) => ({
+  position: "absolute",
+  top: theme.spacing(1.25),
+  left: theme.spacing(1.25),
+  color: theme.palette.text.secondary,
+  fontSize: "0.68rem",
+  fontWeight: 800,
+  lineHeight: 1,
+}));
+
+const WishlistAction = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  zIndex: 2,
+  top: theme.spacing(1),
+  right: theme.spacing(1),
+  color: theme.palette.text.primary,
+  backgroundColor: alpha(theme.palette.background.paper, 0.92),
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: "50%",
+  boxShadow: "0 5px 14px rgba(10, 35, 29, 0.08)",
+  "&:hover": {
+    color: theme.palette.secondary.main,
+    backgroundColor: theme.palette.background.paper,
+    transform: "translateY(-2px)",
+  },
+}));
+
+const ProductDetails = styled(Box)(({ theme }) => ({
+  display: "flex",
+  minHeight: 126,
+  flex: 1,
+  flexDirection: "column",
+  paddingTop: theme.spacing(1.75),
+}));
+
+const ProductTitle = styled(Typography)(({ theme }) => ({
+  display: "-webkit-box",
+  marginTop: theme.spacing(0.75),
+  overflow: "hidden",
+  fontWeight: 700,
+  lineHeight: 1.35,
+  transition: "color var(--motion-fast) ease",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 2,
+}));
 
 export function ProductCard({
   product,
@@ -38,100 +140,42 @@ export function ProductCard({
   };
 
   return (
-    <Card
+    <ProductCardRoot
       className="product-card"
-      elevation={0}
-      sx={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        minWidth: 0,
-        height: "100%",
-        overflow: "visible",
-        bgcolor: "transparent",
-        animationDelay: `${Math.min(index * 45, 360)}ms`,
-      }}
+      style={{ animationDelay: `${Math.min(index * 45, 360)}ms` }}
     >
-      <IconButton
+      <WishlistAction
         aria-label={
           wished
             ? `Remove ${product.title} from wishlist`
             : `Add ${product.title} to wishlist`
         }
         onClick={handleWishlist}
-        sx={{
-          position: "absolute",
-          zIndex: 2,
-          top: 10,
-          right: 10,
-          bgcolor: "background.paper",
-          boxShadow: "0 6px 22px rgba(10, 35, 29, 0.12)",
-          "&:hover": { bgcolor: "background.paper", transform: "scale(1.05)" },
-        }}
       >
         {wished ? (
           <FavoriteRounded color="secondary" />
         ) : (
           <FavoriteBorderRounded />
         )}
-      </IconButton>
+      </WishlistAction>
 
-      <CardActionArea
-        component={Link}
+      <ProductLink
         to={`/products/${product.id}`}
         aria-label={`View ${product.title}`}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "stretch",
-          flexGrow: 1,
-          borderRadius: 4,
-          "&:hover .product-image": {
-            transform: "scale(1.045)",
-          },
-        }}
       >
-        <Box
-          sx={{
-            position: "relative",
-            display: "grid",
-            placeItems: "center",
-            width: "100%",
-            aspectRatio: "4 / 4.6",
-            p: { xs: 2.25, sm: 3.5 },
-            overflow: "hidden",
-            borderRadius: 4,
-            bgcolor: "background.paper",
-            boxShadow: "var(--shadow-soft)",
-          }}
-        >
-          <Box
-            component="img"
+        <ImageFrame>
+          <ProductIndex aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </ProductIndex>
+          <ProductImage
             className="product-image"
             src={product.image}
             alt={product.title}
             loading="lazy"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              transition: "transform 320ms ease",
-              mixBlendMode: (theme) =>
-                theme.palette.mode === "light" ? "multiply" : "normal",
-            }}
           />
-        </Box>
+        </ImageFrame>
 
-        <CardContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            flexGrow: 1,
-            px: { xs: 0.25, sm: 0.5 },
-            pt: 1.75,
-            pb: "0 !important",
-          }}
-        >
+        <ProductDetails>
           <Stack
             direction="row"
             alignItems="center"
@@ -139,47 +183,40 @@ export function ProductCard({
             spacing={1}
           >
             <Typography
-              variant="overline"
+              variant="caption"
               color="text.secondary"
-              sx={{ lineHeight: 1.2, letterSpacing: "0.09em" }}
+              noWrap
+              sx={{ textTransform: "uppercase" }}
             >
               {categoryLabel(product.category)}
             </Typography>
-            <Chip
-              size="small"
-              icon={<StarRounded sx={{ fontSize: "15px !important" }} />}
-              label={product.rating.rate.toFixed(1)}
-              sx={{
-                height: 25,
-                bgcolor: "transparent",
-                "& .MuiChip-label": { px: 0.5 },
-                "& .MuiChip-icon": { color: "#e1a524", ml: 0 },
-              }}
-            />
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={0.35}
+              color="text.secondary"
+            >
+              <StarRounded sx={{ color: "#d49b18", fontSize: 16 }} />
+              <Typography variant="caption">
+                {product.rating.rate.toFixed(1)}
+              </Typography>
+            </Stack>
           </Stack>
-          <Typography
-            component="h2"
+          <ProductTitle
+            className="product-title"
+            as="h2"
             variant="subtitle1"
-            sx={{
-              mt: 0.75,
-              fontWeight: 650,
-              lineHeight: 1.35,
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
           >
             {product.title}
-          </Typography>
+          </ProductTitle>
           <Typography
             variant="h6"
-            sx={{ mt: "auto", pt: 1, fontWeight: 760 }}
+            sx={{ mt: "auto", pt: 1.25, fontWeight: 800 }}
           >
             {formatPrice(product.price)}
           </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+        </ProductDetails>
+      </ProductLink>
+    </ProductCardRoot>
   );
 }

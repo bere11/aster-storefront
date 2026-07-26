@@ -6,6 +6,10 @@ import {
 } from "@mui/material/styles";
 import { useAppState } from "../state/AppState";
 
+const displayFont = 'Georgia, "Times New Roman", serif';
+const bodyFont =
+  '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif';
+
 export function AppThemeProvider({ children }: { children: ReactNode }) {
   const { mode } = useAppState();
 
@@ -16,49 +20,73 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
         palette: {
           mode,
           primary: {
-            main: isLight ? "#173f35" : "#8dd4bd",
+            main: isLight ? "#153f36" : "#91d6c1",
             contrastText: isLight ? "#ffffff" : "#0b211b",
           },
           secondary: {
-            main: isLight ? "#df6c55" : "#ff9a83",
+            main: isLight ? "#d84a36" : "#ff8f79",
+          },
+          info: {
+            main: isLight ? "#32758d" : "#79bfd7",
           },
           background: {
-            default: isLight ? "#f7f6f0" : "#0d1714",
-            paper: isLight ? "#ffffff" : "#14231f",
+            default: isLight ? "#f4f6f3" : "#0c1512",
+            paper: isLight ? "#ffffff" : "#14211d",
           },
           text: {
-            primary: isLight ? "#17201d" : "#eef7f3",
-            secondary: isLight ? "#58625e" : "#aebcb7",
+            primary: isLight ? "#17211d" : "#edf5f1",
+            secondary: isLight ? "#59655f" : "#acbbb5",
           },
-          divider: isLight ? "rgba(23, 63, 53, 0.12)" : "rgba(220, 244, 235, 0.14)",
+          divider: isLight
+            ? "rgba(21, 63, 54, 0.17)"
+            : "rgba(220, 244, 235, 0.16)",
         },
         typography: {
-          fontFamily:
-            '"Inter", "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif',
+          fontFamily: bodyFont,
           h1: {
-            fontWeight: 750,
-            letterSpacing: "-0.045em",
-            lineHeight: 1.02,
+            fontFamily: displayFont,
+            fontWeight: 500,
+            letterSpacing: 0,
+            lineHeight: 0.98,
           },
           h2: {
-            fontWeight: 720,
-            letterSpacing: "-0.035em",
+            fontFamily: displayFont,
+            fontWeight: 500,
+            letterSpacing: 0,
+            lineHeight: 1,
           },
           h3: {
-            fontWeight: 700,
-            letterSpacing: "-0.025em",
+            fontFamily: displayFont,
+            fontWeight: 500,
+            letterSpacing: 0,
+            lineHeight: 1.05,
           },
           h4: {
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
+            fontFamily: displayFont,
+            fontWeight: 500,
+            letterSpacing: 0,
+            lineHeight: 1.1,
+          },
+          h5: {
+            fontFamily: displayFont,
+            fontWeight: 600,
+            letterSpacing: 0,
+          },
+          h6: {
+            letterSpacing: 0,
           },
           button: {
             fontWeight: 700,
+            letterSpacing: 0,
             textTransform: "none",
+          },
+          overline: {
+            fontWeight: 800,
+            letterSpacing: 0,
           },
         },
         shape: {
-          borderRadius: 14,
+          borderRadius: 6,
         },
         components: {
           MuiButton: {
@@ -66,8 +94,22 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
             styleOverrides: {
               root: {
                 minHeight: 44,
-                borderRadius: 999,
-                paddingInline: 22,
+                borderRadius: 4,
+                paddingInline: 18,
+                transition:
+                  "background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease",
+                "&:active": {
+                  transform: "translateY(1px)",
+                },
+              },
+            },
+          },
+          MuiIconButton: {
+            styleOverrides: {
+              root: {
+                borderRadius: 4,
+                transition:
+                  "background-color 180ms ease, color 180ms ease, transform 180ms ease",
               },
             },
           },
@@ -75,6 +117,24 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
             styleOverrides: {
               root: {
                 backgroundImage: "none",
+                borderRadius: 6,
+              },
+            },
+          },
+          MuiChip: {
+            styleOverrides: {
+              root: {
+                borderRadius: 3,
+              },
+            },
+          },
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                backgroundImage: "none",
+              },
+              rounded: {
+                borderRadius: 6,
               },
             },
           },
@@ -86,6 +146,23 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
           MuiTextField: {
             defaultProps: {
               size: "small",
+            },
+          },
+          MuiOutlinedInput: {
+            styleOverrides: {
+              root: {
+                borderRadius: 4,
+                backgroundColor: isLight
+                  ? "rgba(255, 255, 255, 0.72)"
+                  : "rgba(20, 33, 29, 0.72)",
+              },
+            },
+          },
+          MuiCssBaseline: {
+            styleOverrides: {
+              body: {
+                backgroundColor: isLight ? "#f4f6f3" : "#0c1512",
+              },
             },
           },
         },
