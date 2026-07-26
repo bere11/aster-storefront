@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { ProductGrid } from "../theme/primitives";
 
 export function ErrorPanel({
   title = "Something went wrong",
@@ -23,7 +24,7 @@ export function ErrorPanel({
     <Alert
       severity="error"
       variant="outlined"
-      sx={{ borderRadius: 3, alignItems: "center", py: 1.5 }}
+      sx={{ borderRadius: 1, alignItems: "center", py: 1.5 }}
       action={
         onRetry ? (
           <Button
@@ -45,32 +46,22 @@ export function ErrorPanel({
 
 export function ProductGridSkeleton({ count = 8 }: { count?: number }) {
   return (
-    <Box
+    <ProductGrid
       aria-label="Loading products"
       aria-busy="true"
-      sx={{
-        display: "grid",
-        gridTemplateColumns: {
-          xs: "repeat(2, minmax(0, 1fr))",
-          sm: "repeat(2, minmax(0, 1fr))",
-          md: "repeat(3, minmax(0, 1fr))",
-          lg: "repeat(4, minmax(0, 1fr))",
-        },
-        gap: { xs: 1.5, sm: 2.5 },
-      }}
     >
       {Array.from({ length: count }, (_, index) => (
         <Box key={index}>
           <Skeleton
             variant="rounded"
-            sx={{ borderRadius: 4, aspectRatio: "4 / 4.8", height: "auto" }}
+            sx={{ borderRadius: 1, aspectRatio: "4 / 4.8", height: "auto" }}
           />
           <Skeleton width="38%" sx={{ mt: 1.5 }} />
           <Skeleton width="88%" />
           <Skeleton width="28%" />
         </Box>
       ))}
-    </Box>
+    </ProductGrid>
   );
 }
 
@@ -96,9 +87,11 @@ export function EmptyState({
           height: 64,
           display: "grid",
           placeItems: "center",
-          borderRadius: "50%",
+          borderRadius: 1,
           color: "text.secondary",
           bgcolor: "action.hover",
+          border: 1,
+          borderColor: "divider",
         }}
       >
         <SearchOffRounded fontSize="large" />

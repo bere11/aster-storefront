@@ -10,7 +10,6 @@ import {
   Box,
   Breadcrumbs,
   Button,
-  Chip,
   Container,
   Divider,
   Link as MuiLink,
@@ -19,12 +18,122 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 import { useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ErrorPanel } from "../components/Feedback";
 import { useProduct } from "../query/queries";
 import { useAppState } from "../state/AppState";
+import { Eyebrow } from "../theme/primitives";
 import { categoryLabel, formatPrice } from "../utils/products";
+
+const DetailPage = styled(Container)(({ theme }) => ({
+  paddingBlock: theme.spacing(3),
+  [theme.breakpoints.up("md")]: {
+    paddingBlock: theme.spacing(6),
+  },
+}));
+
+const DetailLayout = styled("article")(({ theme }) => ({
+  display: "grid",
+  gap: theme.spacing(4),
+  alignItems: "start",
+  [theme.breakpoints.up("sm")]: {
+    gap: theme.spacing(6),
+  },
+  [theme.breakpoints.up("md")]: {
+    gridTemplateColumns: "minmax(0, 1.04fr) minmax(0, 0.8fr)",
+    gap: theme.spacing(9),
+  },
+}));
+
+const ProductStage = styled(Box)(({ theme }) => ({
+  position: "relative",
+  display: "grid",
+  minHeight: 390,
+  placeItems: "center",
+  padding: theme.spacing(4),
+  overflow: "hidden",
+  backgroundColor:
+    theme.palette.mode === "light"
+      ? alpha(theme.palette.info.main, 0.09)
+      : alpha(theme.palette.common.white, 0.04),
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: 6,
+  [theme.breakpoints.up("sm")]: {
+    minHeight: 520,
+    padding: theme.spacing(7),
+  },
+  [theme.breakpoints.up("md")]: {
+    minHeight: 650,
+    padding: theme.spacing(9),
+  },
+}));
+
+const StageNumber = styled("span")(({ theme }) => ({
+  position: "absolute",
+  top: theme.spacing(2),
+  left: theme.spacing(2),
+  color: alpha(theme.palette.text.primary, 0.35),
+  fontFamily: 'Georgia, "Times New Roman", serif',
+  fontSize: "4rem",
+  lineHeight: 1,
+  [theme.breakpoints.up("md")]: {
+    top: theme.spacing(3),
+    left: theme.spacing(3),
+    fontSize: "6rem",
+  },
+}));
+
+const ProductVisual = styled("img")(({ theme }) => ({
+  width: "100%",
+  height: 310,
+  objectFit: "contain",
+  mixBlendMode: theme.palette.mode === "light" ? "multiply" : "normal",
+  animation: "image-reveal 650ms var(--ease-out) both",
+  [theme.breakpoints.up("sm")]: {
+    height: 410,
+  },
+  [theme.breakpoints.up("md")]: {
+    height: 500,
+  },
+}));
+
+const DetailInfo = styled(Stack)(({ theme }) => ({
+  paddingBlock: theme.spacing(1),
+  [theme.breakpoints.up("md")]: {
+    position: "sticky",
+    top: 126,
+    paddingBlock: theme.spacing(2),
+  },
+}));
+
+const ProductTitle = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(0.5),
+  fontFamily: 'Georgia, "Times New Roman", serif',
+  fontSize: "2.8rem",
+  fontWeight: 500,
+  lineHeight: 1,
+  overflowWrap: "anywhere",
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "3.8rem",
+  },
+}));
+
+const RatingRow = styled(Stack)(({ theme }) => ({
+  width: "fit-content",
+  marginTop: theme.spacing(2.5),
+  paddingBlock: theme.spacing(1),
+  color: theme.palette.text.secondary,
+  borderBlock: `1px solid ${theme.palette.divider}`,
+}));
+
+const ActionRow = styled(Stack)(({ theme }) => ({
+  gap: theme.spacing(1.5),
+  [theme.breakpoints.up("sm")]: {
+    flexDirection: "row",
+  },
+}));
 
 export function ProductPage() {
   const { productId } = useParams();
@@ -56,24 +165,18 @@ export function ProductPage() {
 
   if (isLoading) {
     return (
-      <Container aria-label="Loading product" aria-busy="true" sx={{ py: { xs: 4, md: 8 } }}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { md: "minmax(0, 1fr) minmax(0, 0.9fr)" },
-            gap: { xs: 4, md: 8 },
-          }}
-        >
-          <Skeleton variant="rounded" sx={{ height: { xs: 380, md: 620 }, borderRadius: 5 }} />
+      <DetailPage aria-label="Loading product" aria-busy="true">
+        <DetailLayout>
+          <Skeleton variant="rectangular" sx={{ minHeight: { xs: 390, md: 650 } }} />
           <Stack spacing={2}>
             <Skeleton width="25%" />
-            <Skeleton height={70} />
+            <Skeleton height={160} />
             <Skeleton width="35%" height={45} />
             <Skeleton height={130} />
             <Skeleton height={52} />
           </Stack>
-        </Box>
-      </Container>
+        </DetailLayout>
+      </DetailPage>
     );
   }
 
@@ -103,7 +206,7 @@ export function ProductPage() {
   };
 
   return (
-    <Container className="route-enter" sx={{ py: { xs: 3, md: 6 } }}>
+    <DetailPage className="route-enter">
       <Breadcrumbs aria-label="Breadcrumb" sx={{ mb: { xs: 3, md: 5 } }}>
         <MuiLink component={Link} to="/" underline="hover" color="inherit">
           Shop
@@ -121,68 +224,43 @@ export function ProductPage() {
         </Typography>
       </Breadcrumbs>
 
-      <Box
-        component="article"
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { md: "minmax(0, 1.05fr) minmax(0, 0.85fr)" },
-          gap: { xs: 4, sm: 6, md: 9 },
-          alignItems: "start",
-        }}
-      >
-        <Box
-          sx={{
-            display: "grid",
-            placeItems: "center",
-            minHeight: { xs: 390, sm: 520, md: 650 },
-            p: { xs: 4, sm: 7, md: 10 },
-            bgcolor: "background.paper",
-            borderRadius: 5,
-            boxShadow: "var(--shadow-soft)",
-          }}
-        >
-          <Box
-            component="img"
-            src={product.image}
-            alt={product.title}
-            sx={{
-              width: "100%",
-              height: { xs: 310, sm: 410, md: 510 },
-              objectFit: "contain",
-            }}
-          />
-        </Box>
+      <DetailLayout>
+        <ProductStage>
+          <StageNumber aria-hidden="true">
+            {String(product.id).padStart(2, "0")}
+          </StageNumber>
+          <ProductVisual src={product.image} alt={product.title} />
+        </ProductStage>
 
-        <Stack sx={{ py: { md: 2 } }}>
-          <Typography
-            variant="overline"
-            color="secondary.main"
-            sx={{ fontWeight: 800, letterSpacing: "0.13em" }}
-          >
-            {categoryLabel(product.category)}
-          </Typography>
-          <Typography component="h1" variant="h2" sx={{ mt: 1 }}>
+        <DetailInfo>
+          <Eyebrow>{categoryLabel(product.category)}</Eyebrow>
+          <ProductTitle as="h1" variant="h2">
             {product.title}
-          </Typography>
-          <Stack direction="row" alignItems="center" spacing={1.25} sx={{ mt: 2.5 }}>
-            <Chip
-              icon={<StarRounded />}
-              label={`${product.rating.rate.toFixed(1)} · ${product.rating.count} reviews`}
-              sx={{
-                "& .MuiChip-icon": { color: "#e1a524" },
-              }}
-            />
-          </Stack>
+          </ProductTitle>
+
+          <RatingRow direction="row" alignItems="center" spacing={0.75}>
+            <StarRounded sx={{ color: "#d49b18", fontSize: 20 }} />
+            <Typography variant="body2" fontWeight={700}>
+              {product.rating.rate.toFixed(1)}
+            </Typography>
+            <Typography variant="body2">
+              / {product.rating.count} reviews
+            </Typography>
+          </RatingRow>
+
           <Typography variant="h3" color="primary.main" sx={{ mt: 3.5 }}>
             {formatPrice(product.price)}
           </Typography>
-          <Typography color="text.secondary" sx={{ mt: 3, lineHeight: 1.8, fontSize: "1.05rem" }}>
+          <Typography
+            color="text.secondary"
+            sx={{ mt: 3, lineHeight: 1.8, fontSize: "1.05rem" }}
+          >
             {product.description}
           </Typography>
 
           <Divider sx={{ my: 4 }} />
 
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+          <ActionRow>
             <Button
               variant="contained"
               size="large"
@@ -196,14 +274,18 @@ export function ProductPage() {
               variant="outlined"
               size="large"
               startIcon={
-                wished ? <FavoriteRounded color="secondary" /> : <FavoriteBorderRounded />
+                wished ? (
+                  <FavoriteRounded color="secondary" />
+                ) : (
+                  <FavoriteBorderRounded />
+                )
               }
               onClick={handleWishlist}
               aria-pressed={wished}
             >
               {wished ? "Saved" : "Save"}
             </Button>
-          </Stack>
+          </ActionRow>
 
           {!auth && (
             <Typography
@@ -239,8 +321,8 @@ export function ProductPage() {
           >
             Back to the collection
           </Button>
-        </Stack>
-      </Box>
+        </DetailInfo>
+      </DetailLayout>
 
       <Snackbar
         open={added}
@@ -252,6 +334,6 @@ export function ProductPage() {
           Added to your shopping bag.
         </Alert>
       </Snackbar>
-    </Container>
+    </DetailPage>
   );
 }

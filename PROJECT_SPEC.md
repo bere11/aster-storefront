@@ -5,7 +5,7 @@ progress tracker for the Qubica interview challenge. It is derived from
 `Qubica-interview.pdf`. The PDF remains authoritative if the two documents ever
 conflict.
 
-Last reviewed: 2026-07-25
+Last reviewed: 2026-07-26
 
 ## Status Legend
 
@@ -58,10 +58,10 @@ Router, TanStack React Query, Axios, and Vitest.
 | BONUS-1.2 | Develop features outside `main` | DONE | Ongoing work follows the branch and PR workflow in `CONTRIBUTING.md` |
 | BONUS-2.1 | Use Vue.js | NOT PLANNED | React is the candidate's stronger framework and was chosen deliberately |
 | BONUS-2.2 | Strictly type API responses and data structures | DONE | Strict TypeScript and interfaces under `src/types` |
-| BONUS-2.3 | Use SCSS or CSS variables for design-system values | DONE | CSS custom properties centralize spacing, radii, and elevation |
+| BONUS-2.3 | Use SCSS or CSS variables for design-system values | DONE | Emotion-powered MUI styled components plus CSS custom properties centralize reusable structures, spacing, geometry, elevation, and motion |
 | BONUS-2.4 | Add one or two unit tests | DONE | Vitest covers critical product and redirect utilities |
 | BONUS-2.5 | Implement state-management logic | DONE | Typed Context, reducer, derived state, and local persistence |
-| BONUS-3.1 | Provide polished visuals and smooth view transitions | DONE | Responsive visual system and reduced-motion-aware transitions |
+| BONUS-3.1 | Provide polished visuals and smooth view transitions | DONE | Editorial product-led design, reusable styled components, responsive layouts, and reduced-motion-aware transitions |
 | BONUS-3.2 | Display loading states | DONE | Product skeleton grids and product-detail skeletons |
 | BONUS-3.3 | Display network error states | DONE | Retryable visual error panels and mutation alerts |
 | BONUS-3.4 | Support light and dark themes | DONE | Persisted MUI palette-mode switching |
@@ -91,6 +91,14 @@ own authentication, cart, wishlist, and theme state.
 Fake Store API does not persist write operations. Checkout demonstrates a typed
 cart request and response without presenting it as a real payment or order.
 
+### DEC-5: Styled-Component CSS Architecture
+
+Reusable visual structures use Material UI's Emotion-powered `styled` API.
+Global geometry, elevation, and animation values use CSS custom properties and
+keyframes in `src/styles.css`. Local `sx` props are limited to responsive or
+state-dependent exceptions. This demonstrates custom CSS architecture while
+remaining compatible with the existing Material UI stack.
+
 ## Verification Baseline
 
 The required checks are:
@@ -112,6 +120,8 @@ affected flow.
 | GOV-1 | Add living project specification and agent instructions | DONE | `PROJECT_SPEC.md` and `AGENTS.md` |
 | GOV-2 | Add repository contribution and PR templates | DONE | `CONTRIBUTING.md` and `.github/PULL_REQUEST_TEMPLATE.md` |
 | GOV-3 | Protect `main` with PR and CI requirements | DONE | Active GitHub ruleset requires PRs and the CI status check |
+| DESIGN-1 | Replace the generic visual treatment with a custom editorial storefront system | DONE | API-backed product hero, styled navigation, indexed product frames, sharper surfaces, and shared typography |
+| DESIGN-2 | Verify responsive and dark-theme behavior for the new system | DONE | Desktop, compact, true 390px, and dark-mode browser audits; no horizontal overflow |
 | QA-1 | Review and record user-reported application bugs | TODO | Planned for follow-up prompts |
 
 ## Progress Log
@@ -122,3 +132,12 @@ affected flow.
 - Added CI for tests, lint, and production builds.
 - Demonstrated feature-branch development through merged pull requests.
 - Created the living acceptance matrix and repository workflow guidance.
+
+### 2026-07-26
+
+- Introduced reusable Emotion-powered MUI styled components.
+- Replaced the decorative hero with a responsive API-backed featured product.
+- Added an editorial type, color, surface, and motion system.
+- Refined the header, product cards, product detail, cart, wishlist, login,
+  feedback states, and footer.
+- Verified light and dark layouts at desktop and mobile widths.

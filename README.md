@@ -20,6 +20,7 @@ pull request expectations are documented in
 - Protected, locally persisted shopping bag and wishlist
 - Simulated order submission to the Fake Store cart endpoint
 - Responsive desktop, tablet, and mobile navigation
+- Editorial storefront design with API-backed featured merchandise
 - Light and dark themes
 - Loading skeletons, retryable network errors, empty states, and route transitions
 - Semantic landmarks, keyboard-friendly controls, visible focus states, skip link,
@@ -30,12 +31,13 @@ pull request expectations are documented in
 
 - React 19 + Vite
 - TypeScript (strict mode)
-- Material UI
+- Material UI with Emotion-powered `styled` components
 - React Router
 - TanStack React Query
 - Axios
 - Vitest
 - CSS custom properties for shared spacing, radii, and elevation tokens
+- Custom CSS keyframes and motion tokens with reduced-motion support
 
 ## Local setup
 
@@ -111,6 +113,12 @@ survive refreshes and can be shared directly.
 Routes under `/cart` and `/wishlist` are protected. Unauthenticated visitors are
 sent to `/login` and returned safely to the original local route after a
 successful login.
+
+Reusable visual structures are built with Material UI's Emotion-powered
+`styled` API, while CSS custom properties in `src/styles.css` own shared
+geometry, elevation, and motion values. Local `sx` props are reserved for
+one-off responsive or state-dependent adjustments. This keeps component styles
+co-located without hiding the underlying CSS architecture.
 
 ## AI-assisted development
 
