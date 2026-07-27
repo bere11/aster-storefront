@@ -167,9 +167,9 @@ export function Header() {
   const closeMobileNav = () => setMobileOpen(false);
   const toggleMobileNav = () => setMobileOpen((isOpen) => !isOpen);
   const handleLogout = () => {
-    logout();
     closeMobileNav();
-    navigate("/");
+    navigate("/", { replace: true, flushSync: true });
+    logout();
   };
 
   const isAllActive = location.pathname === "/" && !activeCategory;

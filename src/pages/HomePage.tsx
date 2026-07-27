@@ -38,6 +38,9 @@ const HeroLayout = styled(Container)(({ theme }) => ({
   display: "grid",
   [theme.breakpoints.up("md")]: {
     minHeight: 570,
+    gridTemplateColumns: "minmax(0, 1.1fr) minmax(360px, 0.78fr)",
+  },
+  [theme.breakpoints.up("lg")]: {
     gridTemplateColumns: "minmax(0, 0.9fr) minmax(420px, 0.75fr)",
   },
 }));
@@ -253,7 +256,7 @@ const CollectionHeader = styled(Box)(({ theme }) => ({
   display: "grid",
   gap: theme.spacing(3),
   marginBottom: theme.spacing(5),
-  [theme.breakpoints.up("md")]: {
+  [theme.breakpoints.up("lg")]: {
     gridTemplateColumns: "minmax(0, 1fr) auto",
     alignItems: "end",
   },
@@ -407,8 +410,10 @@ export function HomePage() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search this collection"
-                aria-label="Search products"
                 slotProps={{
+                  htmlInput: {
+                    "aria-label": "Search products",
+                  },
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
