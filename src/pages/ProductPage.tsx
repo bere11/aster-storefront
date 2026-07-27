@@ -41,6 +41,10 @@ const DetailLayout = styled("article")(({ theme }) => ({
     gap: theme.spacing(6),
   },
   [theme.breakpoints.up("md")]: {
+    gridTemplateColumns: "minmax(0, 0.82fr) minmax(380px, 1fr)",
+    gap: theme.spacing(5),
+  },
+  [theme.breakpoints.up("lg")]: {
     gridTemplateColumns: "minmax(0, 1.04fr) minmax(0, 0.8fr)",
     gap: theme.spacing(9),
   },
@@ -96,11 +100,17 @@ const ProductTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(0.5),
   fontFamily:
     '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif',
-  fontSize: "2.65rem",
+  fontSize: "2.4rem",
   fontWeight: 800,
   lineHeight: 1.04,
-  overflowWrap: "anywhere",
+  overflowWrap: "break-word",
   [theme.breakpoints.up("sm")]: {
+    fontSize: "3.3rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2.55rem",
+  },
+  [theme.breakpoints.up("lg")]: {
     fontSize: "3.8rem",
   },
 }));
@@ -236,7 +246,12 @@ export function ProductPage() {
             </Typography>
           </RatingRow>
 
-          <Typography variant="h3" color="primary.main" sx={{ mt: 3.5 }}>
+          <Typography
+            component="p"
+            variant="h3"
+            color="primary.main"
+            sx={{ mt: 3.5 }}
+          >
             {formatPrice(product.price)}
           </Typography>
           <Typography

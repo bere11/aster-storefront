@@ -36,6 +36,7 @@ describe("product utilities", () => {
   it("formats API prices and rejects unsafe redirect URLs", () => {
     expect(formatPrice(109.95)).toBe("$109.95");
     expect(categoryLabel("men's clothing")).toBe("Men's Clothing");
+    expect(categoryLabel("jewelery")).toBe("Jewelry");
     expect(getSafeRedirect("/wishlist")).toBe("/wishlist");
     expect(getSafeRedirect("//malicious.example")).toBe("/");
   });

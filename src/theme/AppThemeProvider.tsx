@@ -14,6 +14,7 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
 
   const theme = useMemo(() => {
     const isLight = mode === "light";
+    const focusRing = isLight ? "#32758d" : "#79bfd7";
     return responsiveFontSizes(
       createTheme({
         palette: {
@@ -23,7 +24,7 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
             contrastText: isLight ? "#ffffff" : "#0b211b",
           },
           secondary: {
-            main: isLight ? "#d84a36" : "#ff8f79",
+            main: isLight ? "#c83d2c" : "#ff8f79",
           },
           info: {
             main: isLight ? "#32758d" : "#79bfd7",
@@ -88,6 +89,16 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
           borderRadius: 6,
         },
         components: {
+          MuiButtonBase: {
+            styleOverrides: {
+              root: {
+                "&.Mui-focusVisible": {
+                  outline: `3px solid ${focusRing}`,
+                  outlineOffset: 3,
+                },
+              },
+            },
+          },
           MuiButton: {
             defaultProps: { disableElevation: true },
             styleOverrides: {

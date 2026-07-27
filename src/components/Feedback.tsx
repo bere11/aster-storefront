@@ -24,7 +24,22 @@ export function ErrorPanel({
     <Alert
       severity="error"
       variant="outlined"
-      sx={{ borderRadius: 1, alignItems: "center", py: 1.5 }}
+      sx={{
+        display: { xs: "grid", sm: "flex" },
+        gridTemplateColumns: { xs: "auto minmax(0, 1fr)" },
+        alignItems: { xs: "start", sm: "center" },
+        borderRadius: 1,
+        py: 1.5,
+        "& .MuiAlert-message": {
+          minWidth: 0,
+        },
+        "& .MuiAlert-action": {
+          gridColumn: { xs: 2 },
+          m: { xs: 0, sm: undefined },
+          p: { xs: "0 0 4px", sm: "0 0 0 16px" },
+          justifySelf: { xs: "start", sm: undefined },
+        },
+      }}
       action={
         onRetry ? (
           <Button

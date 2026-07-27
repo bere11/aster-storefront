@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   InputAdornment,
+  LinearProgress,
   MenuItem,
   Skeleton,
   Stack,
@@ -111,7 +112,7 @@ const HeroTitle = styled(Typography)(({ theme }) => ({
   lineHeight: 1.02,
   overflowWrap: "anywhere",
   [theme.breakpoints.up("sm")]: {
-    fontSize: "4.2rem",
+    fontSize: "3.8rem",
   },
   [theme.breakpoints.up("lg")]: {
     fontSize: "5.15rem",
@@ -183,7 +184,12 @@ const HeroVisual = styled(Box)(({ theme }) => ({
   "&:hover .hero-product-image, &:focus-within .hero-product-image": {
     transform: "translateY(-5px) scale(1.025)",
   },
+  [theme.breakpoints.up("sm")]: {
+    height: 360,
+    minHeight: 0,
+  },
   [theme.breakpoints.up("md")]: {
+    height: "auto",
     minHeight: 570,
   },
 }));
@@ -242,12 +248,14 @@ const HeroProductBar = styled(Link)(({ theme }) => ({
 }));
 
 const CollectionSection = styled("section")(({ theme }) => ({
+  scrollMarginTop: "calc(68px + 1rem)",
   paddingBlock: theme.spacing(4),
   borderTop: `1px solid ${theme.palette.divider}`,
   [theme.breakpoints.up("sm")]: {
     paddingBlock: theme.spacing(6),
   },
   [theme.breakpoints.up("md")]: {
+    scrollMarginTop: "calc(72px + 1rem)",
     paddingBlock: theme.spacing(9),
   },
 }));
@@ -279,6 +287,7 @@ export function HomePage() {
     isFetching,
     isLoading,
     isError,
+    isPlaceholderData,
     refetch,
   } = useProducts(category);
 
@@ -316,6 +325,17 @@ export function HomePage() {
                 href="#collection"
                 variant="contained"
                 endIcon={<ArrowDownwardRounded />}
+                onClick={(event) => {
+                  event.preventDefault();
+                  document.getElementById("collection")?.scrollIntoView({
+                    behavior: window.matchMedia(
+                      "(prefers-reduced-motion: reduce)",
+                    ).matches
+                      ? "auto"
+                      : "smooth",
+                    block: "start",
+                  });
+                }}
               >
                 Browse {category ? collectionLabel.toLowerCase() : "the collection"}
               </Button>
@@ -390,14 +410,18 @@ export function HomePage() {
         </HeroLayout>
       </HeroBand>
 
-      <CollectionSection id="collection" aria-labelledby="collection-heading">
+      <CollectionSection
+        id="collection"
+        aria-labelledby="collection-heading"
+        aria-busy={isFetching}
+      >
         <Container>
           <CollectionHeader>
             <Box>
               <Typography id="collection-heading" component="h2" variant="h2">
                 {category ? categoryLabel(category) : "Shop the collection"}
               </Typography>
-              {!isLoading && !isError && (
+              {!isLoading && !isError && !isPlaceholderData && (
                 <Typography color="text.secondary" sx={{ mt: 1 }}>
                   {visibleProducts.length}{" "}
                   {visibleProducts.length === 1 ? "product" : "products"}
@@ -446,9 +470,19 @@ export function HomePage() {
             </FilterControls>
           </CollectionHeader>
 
-          {isLoading && <ProductGridSkeleton />}
+          {isPlaceholderData && (
+            <LinearProgress
+              color="secondary"
+              aria-label={`Updating ${collectionLabel}`}
+              sx={{ height: 3, mb: 3 }}
+            />
+          )}
+          {(isLoading || isPlaceholderData) && <ProductGridSkeleton />}
           {isError && <ErrorPanel onRetry={() => void refetch()} />}
-          {!isLoading && !isError && visibleProducts.length === 0 && (
+          {!isLoading &&
+            !isPlaceholderData &&
+            !isError &&
+            visibleProducts.length === 0 && (
             <EmptyState
               title="No products match"
               message="Try a broader search or return to the full collection."
@@ -461,10 +495,18 @@ export function HomePage() {
               }
             />
           )}
-          {!isLoading && !isError && visibleProducts.length > 0 && (
+          {!isLoading &&
+            !isPlaceholderData &&
+            !isError &&
+            visibleProducts.length > 0 && (
             <ProductGrid>
               {visibleProducts.map((product, index) => (
-                <ProductCard product={product} index={index} key={product.id} />
+                <ProductCard
+                  product={product}
+                  index={index}
+                  headingLevel="h3"
+                  key={product.id}
+                />
               ))}
             </ProductGrid>
           )}

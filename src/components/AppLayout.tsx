@@ -1,7 +1,14 @@
 import AutoAwesomeRounded from "@mui/icons-material/AutoAwesomeRounded";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link, Outlet } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import {
+  Link,
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+} from "react-router-dom";
+import { categoryLabel } from "../utils/products";
 import { Header } from "./Header";
 
 const SiteShell = styled(Box)({
@@ -44,9 +51,41 @@ const FooterBrand = styled(Link)(({ theme }) => ({
   textDecoration: "none",
 }));
 
+function getDocumentTitle(pathname: string, search: string): string {
+  if (pathname === "/") {
+    const category = new URLSearchParams(search).get("category");
+    return category
+      ? `${categoryLabel(category)} | Aster`
+      : "Aster - Useful things, chosen well";
+  }
+  if (pathname.startsWith("/products/")) return "Product details | Aster";
+  if (pathname === "/cart") return "Shopping bag | Aster";
+  if (pathname === "/wishlist") return "Wishlist | Aster";
+  if (pathname === "/login") return "Sign in | Aster";
+  return "Page not found | Aster";
+}
+
+function RouteEffects() {
+  const { pathname, search } = useLocation();
+  const previousPathname = useRef(pathname);
+
+  useEffect(() => {
+    document.title = getDocumentTitle(pathname, search);
+  }, [pathname, search]);
+
+  useEffect(() => {
+    if (previousPathname.current === pathname) return;
+    previousPathname.current = pathname;
+    document.getElementById("main-content")?.focus({ preventScroll: true });
+  }, [pathname]);
+
+  return null;
+}
+
 export function AppLayout() {
   return (
     <SiteShell>
+      <RouteEffects />
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
@@ -73,6 +112,7 @@ export function AppLayout() {
           </Stack>
         </FooterInner>
       </Footer>
+      <ScrollRestoration />
     </SiteShell>
   );
 }
