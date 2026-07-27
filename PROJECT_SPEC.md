@@ -144,7 +144,7 @@ affected flow.
 | QA-5 | Complete a final delivery-readiness audit | DONE | Reconciled the PDF, repository, source, live API contract, security report, and all responsive/authenticated browser flows |
 | A11Y-2 | Close final keyboard, motion, contrast, focus, and heading gaps | DONE | Added route focus, MUI focus rings, AA coral contrast, delay-free reduced motion, and contextual heading semantics |
 | DESIGN-7 | Polish final tablet, compact-desktop, cart, and error layouts | DONE | Rebalanced the 768px hero, long product titles at 900px, mobile cart controls, fixed-header anchor, and 320px retry panel |
-| DESIGN-8 | Give light and dark page backgrounds restrained branded depth | DONE | Theme-aware coral frames and blue-green planes sit behind catalogue content; product routes suppress decoration to preserve reading clarity |
+| DESIGN-8 | Give light and dark page backgrounds restrained branded depth | DONE | Theme-aware coral frames and blue-green planes sit behind catalogue content and inside the product image stage, keeping all product text on clear reading surfaces |
 
 ## Progress Log
 
@@ -192,4 +192,5 @@ affected flow.
   320px through 1440px, including reduced motion, keyboard focus, mobile error
   recovery, the longest product title, cart, wishlist, and logout.
 - Added a theme-aware geometric page backdrop derived from the hero language,
-  while keeping product-detail reading surfaces decoration-free.
+  with product-detail decoration contained inside the image stage so reading
+  surfaces remain clear.

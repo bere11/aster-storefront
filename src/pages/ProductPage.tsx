@@ -63,9 +63,49 @@ const ProductStage = styled(Box)(({ theme }) => ({
       : alpha(theme.palette.common.white, 0.04),
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: 8,
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: -56,
+    right: -72,
+    width: 210,
+    height: 210,
+    border: `24px solid ${alpha(
+      theme.palette.secondary.main,
+      theme.palette.mode === "light" ? 0.1 : 0.13,
+    )}`,
+    borderRadius: 8,
+    transform: "rotate(12deg)",
+  },
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    bottom: -68,
+    left: -42,
+    width: 86,
+    height: 230,
+    backgroundColor: alpha(
+      theme.palette.info.main,
+      theme.palette.mode === "light" ? 0.09 : 0.12,
+    ),
+    transform: "rotate(-12deg)",
+  },
   [theme.breakpoints.up("sm")]: {
     minHeight: 520,
     padding: theme.spacing(7),
+    "&::before": {
+      top: -70,
+      right: -88,
+      width: 280,
+      height: 280,
+      borderWidth: 30,
+    },
+    "&::after": {
+      bottom: -82,
+      left: -48,
+      width: 102,
+      height: 300,
+    },
   },
   [theme.breakpoints.up("md")]: {
     minHeight: 650,
@@ -74,6 +114,8 @@ const ProductStage = styled(Box)(({ theme }) => ({
 }));
 
 const ProductVisual = styled("img")(({ theme }) => ({
+  position: "relative",
+  zIndex: 1,
   width: "100%",
   height: 310,
   objectFit: "contain",
