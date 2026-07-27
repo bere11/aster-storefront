@@ -1,6 +1,6 @@
 import AutoAwesomeRounded from "@mui/icons-material/AutoAwesomeRounded";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 import { useEffect, useRef } from "react";
 import {
   Link,
@@ -12,17 +12,87 @@ import { categoryLabel } from "../utils/products";
 import { Header } from "./Header";
 
 const SiteShell = styled(Box)({
+  position: "relative",
   display: "flex",
   minHeight: "100vh",
   flexDirection: "column",
+  isolation: "isolate",
+});
+
+const PageBackdrop = styled("div")(({ theme }) => {
+  const frameColor = alpha(
+    theme.palette.secondary.main,
+    theme.palette.mode === "light" ? 0.045 : 0.06,
+  );
+  const blockColor = alpha(
+    theme.palette.info.main,
+    theme.palette.mode === "light" ? 0.04 : 0.055,
+  );
+
+  return {
+    position: "absolute",
+    zIndex: 0,
+    inset: 0,
+    overflow: "hidden",
+    pointerEvents: "none",
+    "&::before, & > span": {
+      content: '""',
+      position: "absolute",
+      right: -330,
+      width: 440,
+      height: 440,
+      border: `42px solid ${frameColor}`,
+      borderRadius: 8,
+      transform: "rotate(12deg)",
+    },
+    "&::before": {
+      top: 720,
+    },
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      top: 1430,
+      left: -72,
+      width: 112,
+      height: 360,
+      backgroundColor: blockColor,
+      transform: "rotate(-12deg)",
+    },
+    "& > span": {
+      top: 2440,
+      transform: "rotate(-8deg)",
+    },
+    '&[data-page="product"]': {
+      "&::before, &::after, & > span": {
+        display: "none",
+      },
+    },
+    [theme.breakpoints.up("md")]: {
+      "&::before, & > span": {
+        right: -300,
+        width: 480,
+        height: 480,
+        borderWidth: 48,
+      },
+      "&::after": {
+        left: -62,
+        width: 126,
+        height: 420,
+      },
+    },
+  };
 });
 
 const Main = styled("main")({
+  position: "relative",
+  zIndex: 1,
   flexGrow: 1,
   outline: 0,
 });
 
 const Footer = styled("footer")(({ theme }) => ({
+  position: "relative",
+  zIndex: 1,
   marginTop: "auto",
   paddingBlock: theme.spacing(4),
   color: theme.palette.text.primary,
@@ -83,8 +153,16 @@ function RouteEffects() {
 }
 
 export function AppLayout() {
+  const { pathname } = useLocation();
+
   return (
     <SiteShell>
+      <PageBackdrop
+        data-page={pathname.startsWith("/products/") ? "product" : "default"}
+        aria-hidden="true"
+      >
+        <span />
+      </PageBackdrop>
       <RouteEffects />
       <a className="skip-link" href="#main-content">
         Skip to main content
