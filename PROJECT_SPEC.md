@@ -5,7 +5,7 @@ progress tracker for the Qubica interview challenge. It is derived from
 `Qubica-interview.pdf`. The PDF remains authoritative if the two documents ever
 conflict.
 
-Last reviewed: 2026-07-26
+Last reviewed: 2026-07-27
 
 ## Status Legend
 
@@ -40,8 +40,8 @@ Router, TanStack React Query, Axios, and Vitest.
 | AC-1.3 | Include precise local setup instructions in the root README | DONE | `README.md` includes prerequisites, install, run, environment, and checks |
 | AC-1.4 | Explain AI usage and validation in the README | DONE | `README.md` contains an AI-assisted development section |
 | AC-2.1 | Global layout contains a Header and Main area | DONE | `Header` and semantic `main` in `AppLayout` |
-| AC-2.2 | Fully usable on tablets and smartphones | DONE | Responsive MUI layouts and mobile category drawer |
-| AC-2.3 | Use semantic HTML, keyboard navigation, and image alt text | DONE | Semantic landmarks, skip link, focus states, buttons/links, and product alt text |
+| AC-2.2 | Fully usable on tablets and smartphones | DONE | Responsive MUI layouts; Chrome audit at 320, 390, 768, 900, 1024, 1200, and 1440px found no horizontal overflow |
+| AC-2.3 | Use semantic HTML, keyboard navigation, and image alt text | DONE | Semantic landmarks, native input labels, skip-link focus, keyboard navigation, focus states, and product alt text |
 | AC-3.1 | Header displays store name, logo, and category navigation | DONE | Aster brand, textual mark, desktop navigation, and mobile drawer |
 | AC-3.2 | Fetch categories dynamically from the API | DONE | `useCategories` queries `/products/categories` |
 | AC-4.1 | Home displays API product cards with image, name, and price | DONE | Responsive product grid and `ProductCard` |
@@ -66,7 +66,7 @@ Router, TanStack React Query, Axios, and Vitest.
 | BONUS-3.3 | Display network error states | DONE | Retryable visual error panels and mutation alerts |
 | BONUS-3.4 | Support light and dark themes | DONE | Persisted MUI palette-mode switching |
 | BONUS-3.5 | Add to cart and show a Header counter | DONE | Protected cart state, quantity management, and Header badge |
-| BONUS-3.6 | Integrate API login and logout | DONE | Fake Store API login, persisted session, protected routes, and logout |
+| BONUS-3.6 | Integrate API login and logout | DONE | Fake Store API login, persisted session, deterministic logout navigation, and protected routes |
 
 ## Project Decisions
 
@@ -128,6 +128,9 @@ affected flow.
 | DESIGN-5 | Increase hero depth while preserving the storefront direction | DONE | Layered geometric color blocks, offset product plate, and stronger responsive hero palette |
 | QA-2 | Refine mobile header and drawer behavior | DONE | Wishlist/cart stay in the app bar; theme/session actions moved into the drawer; app-bar and in-drawer close controls verified at 390px |
 | QA-3 | Keep the hero accent edge continuous above layered child backgrounds | DONE | Structural 4px theme-aware border verified continuously across desktop light and dark hero layouts |
+| DESIGN-6 | Improve compact-desktop Home composition | DONE | Hero copy and actions remain readable at 900px; the collection toolbar splits only from 1200px while the wide layout is preserved |
+| A11Y-1 | Give the Home search input a reliable accessible name | DONE | The label now targets the native search input; skip-link focus behavior was also verified |
+| QA-4 | Audit every required route and protected commerce flow | DONE | Verified real API login, cart, wishlist, checkout, category refresh, sorting, retry recovery, invalid routes, and logout at mobile and desktop widths |
 
 ## Progress Log
 
@@ -158,3 +161,12 @@ affected flow.
   app-bar close, drawer close, theme switching, and logout behavior.
 - Replaced the clipped inset hero accent with a continuous structural border
   and verified the result in light and dark themes.
+
+### 2026-07-27
+
+- Reconciled the PDF acceptance criteria with the implemented routes, states,
+  and living requirement matrix.
+- Audited the application in Chrome from 320px through 1440px, including real
+  API login, cart, wishlist, checkout, category, error, and deep-link flows.
+- Improved compact-desktop Home composition, corrected the native search-input
+  label, and removed a protected-page logout navigation race.
