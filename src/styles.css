@@ -1,15 +1,5 @@
 :root {
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --radius-xs: 2px;
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
   --shadow-soft: 0 14px 36px rgba(18, 44, 37, 0.08);
   --shadow-lifted: 0 20px 42px rgba(18, 44, 37, 0.13);
   --motion-fast: 180ms;
@@ -24,7 +14,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: clip;
 }
 
@@ -37,7 +26,7 @@ body {
 
 ::selection {
   color: #ffffff;
-  background: #d84a36;
+  background: #c83d2c;
 }
 
 button,
@@ -159,7 +148,9 @@ img {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0.01ms !important;
   }
 }

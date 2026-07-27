@@ -41,6 +41,10 @@ const DetailLayout = styled("article")(({ theme }) => ({
     gap: theme.spacing(6),
   },
   [theme.breakpoints.up("md")]: {
+    gridTemplateColumns: "minmax(0, 0.82fr) minmax(380px, 1fr)",
+    gap: theme.spacing(5),
+  },
+  [theme.breakpoints.up("lg")]: {
     gridTemplateColumns: "minmax(0, 1.04fr) minmax(0, 0.8fr)",
     gap: theme.spacing(9),
   },
@@ -59,9 +63,49 @@ const ProductStage = styled(Box)(({ theme }) => ({
       : alpha(theme.palette.common.white, 0.04),
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: 8,
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: -56,
+    right: -72,
+    width: 210,
+    height: 210,
+    border: `24px solid ${alpha(
+      theme.palette.secondary.main,
+      theme.palette.mode === "light" ? 0.1 : 0.13,
+    )}`,
+    borderRadius: 8,
+    transform: "rotate(12deg)",
+  },
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    bottom: -68,
+    left: -42,
+    width: 86,
+    height: 230,
+    backgroundColor: alpha(
+      theme.palette.info.main,
+      theme.palette.mode === "light" ? 0.09 : 0.12,
+    ),
+    transform: "rotate(-12deg)",
+  },
   [theme.breakpoints.up("sm")]: {
     minHeight: 520,
     padding: theme.spacing(7),
+    "&::before": {
+      top: -70,
+      right: -88,
+      width: 280,
+      height: 280,
+      borderWidth: 30,
+    },
+    "&::after": {
+      bottom: -82,
+      left: -48,
+      width: 102,
+      height: 300,
+    },
   },
   [theme.breakpoints.up("md")]: {
     minHeight: 650,
@@ -70,6 +114,8 @@ const ProductStage = styled(Box)(({ theme }) => ({
 }));
 
 const ProductVisual = styled("img")(({ theme }) => ({
+  position: "relative",
+  zIndex: 1,
   width: "100%",
   height: 310,
   objectFit: "contain",
@@ -96,11 +142,17 @@ const ProductTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(0.5),
   fontFamily:
     '"Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif',
-  fontSize: "2.65rem",
+  fontSize: "2.4rem",
   fontWeight: 800,
   lineHeight: 1.04,
-  overflowWrap: "anywhere",
+  overflowWrap: "break-word",
   [theme.breakpoints.up("sm")]: {
+    fontSize: "3.3rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2.55rem",
+  },
+  [theme.breakpoints.up("lg")]: {
     fontSize: "3.8rem",
   },
 }));
@@ -236,7 +288,12 @@ export function ProductPage() {
             </Typography>
           </RatingRow>
 
-          <Typography variant="h3" color="primary.main" sx={{ mt: 3.5 }}>
+          <Typography
+            component="p"
+            variant="h3"
+            color="primary.main"
+            sx={{ mt: 3.5 }}
+          >
             {formatPrice(product.price)}
           </Typography>
           <Typography

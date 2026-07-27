@@ -111,9 +111,11 @@ const ProductTitle = styled(Typography)(({ theme }) => ({
 export function ProductCard({
   product,
   index = 0,
+  headingLevel = "h2",
 }: {
   product: Product;
   index?: number;
+  headingLevel?: "h2" | "h3";
 }) {
   const { auth, isWishlisted, toggleWishlist } = useAppState();
   const location = useLocation();
@@ -190,12 +192,13 @@ export function ProductCard({
           </Stack>
           <ProductTitle
             className="product-title"
-            as="h2"
+            as={headingLevel}
             variant="subtitle1"
           >
             {product.title}
           </ProductTitle>
           <Typography
+            component="p"
             variant="h6"
             color="primary.main"
             sx={{ mt: "auto", pt: 1.25, fontWeight: 800 }}

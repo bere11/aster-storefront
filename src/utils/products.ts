@@ -36,6 +36,8 @@ export function filterAndSortProducts(
 }
 
 export function categoryLabel(category: string): string {
+  if (category.toLocaleLowerCase() === "jewelery") return "Jewelry";
+
   return category
     .split(/\s+/)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

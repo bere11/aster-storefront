@@ -36,8 +36,8 @@ pull request expectations are documented in
 - TanStack React Query
 - Axios
 - Vitest
-- CSS custom properties for shared spacing, radii, and elevation tokens
-- Custom CSS keyframes and motion tokens with reduced-motion support
+- Material UI theme tokens for palette, typography, spacing, and shape
+- CSS custom properties and keyframes for shared elevation and motion
 
 ## Local setup
 
@@ -49,12 +49,14 @@ Requirements:
 Install and run:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 Open the local URL printed by Vite, normally
 `http://localhost:5173`.
+
+Use `npm install` instead when intentionally updating dependencies.
 
 The app uses `https://fakestoreapi.com` by default. To override it:
 
@@ -115,10 +117,11 @@ sent to `/login` and returned safely to the original local route after a
 successful login.
 
 Reusable visual structures are built with Material UI's Emotion-powered
-`styled` API, while CSS custom properties in `src/styles.css` own shared
-geometry, elevation, and motion values. Local `sx` props are reserved for
-one-off responsive or state-dependent adjustments. This keeps component styles
-co-located without hiding the underlying CSS architecture.
+`styled` API. The MUI theme owns palette, typography, spacing, and shape, while
+CSS custom properties in `src/styles.css` own shared elevation and motion
+values. Local `sx` props are reserved for one-off responsive or state-dependent
+adjustments. This keeps component styles co-located without hiding the
+underlying CSS architecture.
 
 ## AI-assisted development
 

@@ -37,8 +37,8 @@ export function LoginPage() {
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: ({ token }) => {
-      loginSession({ token, username });
+    onSuccess: ({ token }, credentials) => {
+      loginSession({ token, username: credentials.username });
       navigate(redirect, { replace: true });
     },
   });
@@ -114,6 +114,7 @@ export function LoginPage() {
               autoComplete="username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
+              disabled={loginMutation.isPending}
               required
               fullWidth
             />
@@ -124,6 +125,7 @@ export function LoginPage() {
               autoComplete="current-password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              disabled={loginMutation.isPending}
               required
               fullWidth
               slotProps={{
@@ -179,6 +181,7 @@ export function LoginPage() {
           </Typography>
           <Button
             size="small"
+            disabled={loginMutation.isPending}
             onClick={() => {
               setUsername(DEMO_USERNAME);
               setPassword(DEMO_PASSWORD);

@@ -25,7 +25,11 @@ import { createCart } from "../api/storeApi";
 import { EmptyState } from "../components/Feedback";
 import { useAppState } from "../state/AppState";
 import { PageContainer, PageTitle } from "../theme/primitives";
-import { formatPrice, getUserIdFromToken } from "../utils/products";
+import {
+  categoryLabel,
+  formatPrice,
+  getUserIdFromToken,
+} from "../utils/products";
 
 export function CartPage() {
   const {
@@ -62,9 +66,10 @@ export function CartPage() {
   return (
     <PageContainer className="route-enter">
       <Stack
-        direction="row"
-        alignItems="flex-end"
-        justifyContent="space-between"
+        direction={{ xs: "column", sm: "row" }}
+        alignItems={{ xs: "flex-start", sm: "flex-end" }}
+        justifyContent={{ sm: "space-between" }}
+        spacing={{ xs: 1, sm: 2 }}
         sx={{ mb: { xs: 3, md: 5 } }}
       >
         <Box>
@@ -147,7 +152,7 @@ export function CartPage() {
                     {product.title}
                   </Typography>
                   <Typography color="text.secondary" variant="body2" sx={{ mt: 0.5 }}>
-                    {product.category}
+                    {categoryLabel(product.category)}
                   </Typography>
                   <Typography fontWeight={750} sx={{ mt: 1 }}>
                     {formatPrice(product.price)}
@@ -159,9 +164,9 @@ export function CartPage() {
                     sx={{ mt: "auto", pt: 2 }}
                   >
                     <IconButton
-                      size="small"
                       onClick={() => setQuantity(product.id, quantity - 1)}
                       aria-label={`Decrease quantity of ${product.title}`}
+                      sx={{ width: 44, height: 44 }}
                     >
                       <RemoveRounded fontSize="small" />
                     </IconButton>
@@ -172,9 +177,9 @@ export function CartPage() {
                       {quantity}
                     </Typography>
                     <IconButton
-                      size="small"
                       onClick={() => setQuantity(product.id, quantity + 1)}
                       aria-label={`Increase quantity of ${product.title}`}
+                      sx={{ width: 44, height: 44 }}
                     >
                       <AddRounded fontSize="small" />
                     </IconButton>
@@ -189,7 +194,7 @@ export function CartPage() {
                     flexDirection: { xs: "row", sm: "column" },
                   }}
                 >
-                  <Typography variant="h6">
+                  <Typography component="p" variant="h6">
                     {formatPrice(product.price * quantity)}
                   </Typography>
                   <IconButton
@@ -234,8 +239,12 @@ export function CartPage() {
               </Stack>
               <Divider />
               <Stack direction="row" justifyContent="space-between">
-                <Typography variant="h6">Total</Typography>
-                <Typography variant="h5">{formatPrice(subtotal)}</Typography>
+                <Typography component="p" variant="h6">
+                  Total
+                </Typography>
+                <Typography component="p" variant="h5">
+                  {formatPrice(subtotal)}
+                </Typography>
               </Stack>
             </Stack>
             {checkout.isError && (

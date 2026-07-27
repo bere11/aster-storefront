@@ -40,8 +40,8 @@ Router, TanStack React Query, Axios, and Vitest.
 | AC-1.3 | Include precise local setup instructions in the root README | DONE | `README.md` includes prerequisites, install, run, environment, and checks |
 | AC-1.4 | Explain AI usage and validation in the README | DONE | `README.md` contains an AI-assisted development section |
 | AC-2.1 | Global layout contains a Header and Main area | DONE | `Header` and semantic `main` in `AppLayout` |
-| AC-2.2 | Fully usable on tablets and smartphones | DONE | Responsive MUI layouts; Chrome audit at 320, 390, 768, 900, 1024, 1200, and 1440px found no horizontal overflow |
-| AC-2.3 | Use semantic HTML, keyboard navigation, and image alt text | DONE | Semantic landmarks, native input labels, skip-link focus, keyboard navigation, focus states, and product alt text |
+| AC-2.2 | Fully usable on tablets and smartphones | DONE | Responsive MUI layouts; final Chrome audit at 320, 390, 768, 900, 1024, and 1440px found no overflow or blocked flows |
+| AC-2.3 | Use semantic HTML, keyboard navigation, and image alt text | DONE | Semantic landmarks and headings, route focus, visible keyboard focus, native labels, skip link, reduced motion, and product alt text |
 | AC-3.1 | Header displays store name, logo, and category navigation | DONE | Aster brand, textual mark, desktop navigation, and mobile drawer |
 | AC-3.2 | Fetch categories dynamically from the API | DONE | `useCategories` queries `/products/categories` |
 | AC-4.1 | Home displays API product cards with image, name, and price | DONE | Responsive product grid and `ProductCard` |
@@ -58,10 +58,10 @@ Router, TanStack React Query, Axios, and Vitest.
 | BONUS-1.2 | Develop features outside `main` | DONE | Ongoing work follows the branch and PR workflow in `CONTRIBUTING.md` |
 | BONUS-2.1 | Use Vue.js | NOT PLANNED | React is the candidate's stronger framework and was chosen deliberately |
 | BONUS-2.2 | Strictly type API responses and data structures | DONE | Strict TypeScript and interfaces under `src/types` |
-| BONUS-2.3 | Use SCSS or CSS variables for design-system values | DONE | Emotion-powered MUI styled components plus CSS custom properties centralize reusable structures, spacing, geometry, elevation, and motion |
+| BONUS-2.3 | Use SCSS or CSS variables for design-system values | DONE | Emotion-powered MUI styled components and theme tokens centralize palette, typography, spacing, and shape; CSS custom properties own shared elevation and motion |
 | BONUS-2.4 | Add one or two unit tests | DONE | Vitest covers critical product and redirect utilities |
 | BONUS-2.5 | Implement state-management logic | DONE | Typed Context, reducer, derived state, and local persistence |
-| BONUS-3.1 | Provide polished visuals and smooth view transitions | DONE | Distinct branded storefront, reusable styled components, responsive layouts, and reduced-motion-aware transitions |
+| BONUS-3.1 | Provide polished visuals and smooth view transitions | DONE | Distinct branded storefront, truthful category transitions, route scroll restoration, responsive layouts, and reduced-motion-aware motion |
 | BONUS-3.2 | Display loading states | DONE | Product skeleton grids and product-detail skeletons |
 | BONUS-3.3 | Display network error states | DONE | Retryable visual error panels and mutation alerts |
 | BONUS-3.4 | Support light and dark themes | DONE | Persisted MUI palette-mode switching |
@@ -94,10 +94,20 @@ cart request and response without presenting it as a real payment or order.
 ### DEC-5: Styled-Component CSS Architecture
 
 Reusable visual structures use Material UI's Emotion-powered `styled` API.
-Global geometry, elevation, and animation values use CSS custom properties and
-keyframes in `src/styles.css`. Local `sx` props are limited to responsive or
-state-dependent exceptions. This demonstrates custom CSS architecture while
-remaining compatible with the existing Material UI stack.
+MUI theme tokens own palette, typography, spacing, and shape. Shared elevation
+and animation values use CSS custom properties and keyframes in
+`src/styles.css`. Local `sx` props are limited to responsive or state-dependent
+exceptions. This demonstrates custom CSS architecture while remaining
+compatible with the existing Material UI stack.
+
+### DEC-6: React Router RSC Advisory
+
+As of 2026-07-27, `npm audit --omit=dev` reports
+[`GHSA-qwww-vcr4-c8h2`](https://github.com/advisories/GHSA-qwww-vcr4-c8h2)
+for React Router. The advisory explicitly applies only to unstable RSC APIs,
+which this client-only SPA does not use. Its patched `8.3.0` release is not yet
+published on npm, so the project records and monitors the non-applicable
+finding instead of forcing an unsafe dependency change.
 
 ## Verification Baseline
 
@@ -131,6 +141,10 @@ affected flow.
 | DESIGN-6 | Improve compact-desktop Home composition | DONE | Hero copy and actions remain readable at 900px; the collection toolbar splits only from 1200px while the wide layout is preserved |
 | A11Y-1 | Give the Home search input a reliable accessible name | DONE | The label now targets the native search input; skip-link focus behavior was also verified |
 | QA-4 | Audit every required route and protected commerce flow | DONE | Verified real API login, cart, wishlist, checkout, category refresh, sorting, retry recovery, invalid routes, and logout at mobile and desktop widths |
+| QA-5 | Complete a final delivery-readiness audit | DONE | Reconciled the PDF, repository, source, live API contract, security report, and all responsive/authenticated browser flows |
+| A11Y-2 | Close final keyboard, motion, contrast, focus, and heading gaps | DONE | Added route focus, MUI focus rings, AA coral contrast, delay-free reduced motion, and contextual heading semantics |
+| DESIGN-7 | Polish final tablet, compact-desktop, cart, and error layouts | DONE | Rebalanced the 768px hero, long product titles at 900px, mobile cart controls, fixed-header anchor, and 320px retry panel |
+| DESIGN-8 | Give light and dark page backgrounds restrained branded depth | DONE | Theme-aware coral frames and blue-green planes sit behind catalogue content and inside the product image stage, keeping all product text on clear reading surfaces |
 
 ## Progress Log
 
@@ -170,3 +184,13 @@ affected flow.
   API login, cart, wishlist, checkout, category, error, and deep-link flows.
 - Improved compact-desktop Home composition, corrected the native search-input
   label, and removed a protected-page logout navigation race.
+- Completed a three-part delivery audit covering requirements, code quality,
+  accessibility, security, and visual cohesion.
+- Added deterministic route scroll/focus, route-specific document titles,
+  truthful category loading, normalized labels, and resilient login behavior.
+- Verified the final responsive treatment and real API flows in Chrome from
+  320px through 1440px, including reduced motion, keyboard focus, mobile error
+  recovery, the longest product title, cart, wishlist, and logout.
+- Added a theme-aware geometric page backdrop derived from the hero language,
+  with product-detail decoration contained inside the image stage so reading
+  surfaces remain clear.
